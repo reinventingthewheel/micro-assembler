@@ -15,7 +15,7 @@ Where `<I>` is the instruction letter, `<A>` is the addressing mode symbol (whet
 
 ## Instruction Set ##
 
-Here is the twelve instructions. Actually there are six, but each with two adressing
+Here is the fourteen instructions. Actually there are 8, but 6 of them with two adressing
 mode, `#` (immediate) and `$` (relative):
 
 
@@ -31,3 +31,6 @@ mode, `#` (immediate) and `$` (relative):
 * `J $<N>`    -> Jumps to line number pointed by `<N>`
 * `C #<N>`    -> Skips next line if `<N>` is equals to register
 * `C $<N>`    -> Skips next line if value pointed by `<N>` is equal to register
+* `R`         -> Reads a char from stdin to register
+* `W`         -> Writes a char from register to stdout
+
