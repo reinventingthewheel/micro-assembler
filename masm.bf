@@ -25,7 +25,17 @@ Indirect    : 1
 #5  continueParsingLine
 #6  continueParsingLineCopy
 #7  operandType
+#20 operandStart
 =================================
+
+
+
+=============== Dumps shift right 24 times ======================
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+........................
+[-]
+=================================================================
+
 
 
 >>>>+                                       #readChar = true
@@ -497,24 +507,73 @@ Indirect    : 1
 
 
 
-        ============ Debug only ====================================================
-        <+                                          #instruction plus 1
-        ++++++++++++++++++++++++++++++++++++++++++++++++ .         #print instruction
-        [-]                                         #instruction = 0
+        ============ dumping parsed program ===================================
 
-        >>>>>>++++++++++++++++++++++++++++++++++++++++++++++++.     #print operandType
-        [-]                                         #operandType = 0
+        ======== Symbols ==========
+        #1      instruction
+        #2      isDesiredChar
+        #7      operandType
+        #10     operandInt
+        #20     (left)
+        #21     (right)
+        #22     (plus)
+        ===========================
 
-        >>>.                                        #print operandInt
-        [-]                                         #operandInt = 0
-        <<<                                         #go to operandType
+        <+                                          #instruction plus 1 (fix the correct instruction number)
+        <                                           #go to #0
 
-        <<<<<<                                      #go to instruction
+        >>>>>>>>>>>>>>>>>>>>                        #go to (left)
+        ++++++++++++++++++++++++++++++
+        ++++++++++++++++++++++++++++++              #(left) = 60 (lt char)
 
-        ++++++++++++++++++++++++++++++++.[-]        #print '\s'
-        ============================================================================
+        >                                           #go to (right)
+        ++++++++++++++++++++++++++++++
+        ++++++++++++++++++++++++++++++++            #(right) = 62 (gt char)
 
-        >-                                          #isDesiredChar = false
+        >                                           #go to (plus)
+        ++++++++++++++++++++++++++++++
+        +++++++++++++                               #(plus) = 43 (plus char)
+
+
+        ================ Dumps control slot =================
+        .                                           #print plus
+        <.                                          #pring right
+        =====================================================
+
+
+        ================ Dumps instruction slot ==============
+        <<<<<<<<<<<<<<<<<<<<                        #go to instruction
+        [                                           #while instruction
+            -                                           #decrement instruction
+            >>>>>>>>>>>>>>>>>>>>>.                      #print (plus)
+            <<<<<<<<<<<<<<<<<<<<<                       #go to instruction
+        ]
+        >>>>>>>>>>>>>>>>>>>>.                       #print (right)
+        =====================================================
+
+        ================ Dumps operandType slot ==============
+        <<<<<<<<<<<<<<                              #go to operantType
+        [                                           #while operadType
+            -                                           #decrement operandType
+            >>>>>>>>>>>>>>>.                            #print (plus)
+            <<<<<<<<<<<<<<<                             #go to operandType
+        ]
+        >>>>>>>>>>>>>>.                             #print (right)
+        =====================================================
+
+        ================ Dumps operand slot =================
+        <<<<<<<<<<<                                 #go to operandInt
+        [                                           #while operandInt
+            -                                           #decrement operandInt
+            >>>>>>>>>>>>.                            #print (plus)
+            <<<<<<<<<<<<                             #go to operandInt
+        ]
+        >>>>>>>>>>>.                                #print (right)
+        =====================================================
+
+        <[-]>[-]>[-]                                #resets #20 to #22
+
+        <<<<<<<<<<<<<<<<<<<<-                       #isDesiredChar = false
     ]
     <<                                          #go to char
     ============================================================================
