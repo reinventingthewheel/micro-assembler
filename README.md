@@ -19,18 +19,18 @@ Here is the fourteen instructions. Actually there are 8, but 6 of them with two 
 mode, `#` (immediate) and `$` (relative):
 
 
-* `G #<N>`    -> Gets value from register to `<N>` memory address
-* `G $<N>`    -> Gets value from register to memory address pointed by `<N>`
-* `S #<N>`    -> Sets register value to `<N>`
-* `S $<N>`    -> Sets register to value pointed by `<N>`
+* `G #<N>`    -> **G**ets value from register to `<N>` memory address
+* `G $<N>`    -> **G**ets value from register to memory address pointed by `<N>`
+* `S #<N>`    -> **S**ets register value to `<N>`
+* `S $<N>`    -> **S**ets register to value pointed by `<N>`
 * `+ #<N>`    -> Adds `<N>` to register
 * `+ $<N>`    -> Adds value pointed by `<N>` to register
 * `- #<N>`    -> Subtracts `<N>` from register (storing result in register)
 * `- $<N>`    -> Subtracts value pointed by `<N>` from register
-* `J #<N>`    -> Jumps to line number `<N>`
-* `J $<N>`    -> Jumps to line number pointed by `<N>`
-* `C #<N>`    -> Skips next line if `<N>` is equals to register
-* `C $<N>`    -> Skips next line if value pointed by `<N>` is equal to register
-* `R`         -> Reads a char from stdin to register
-* `W`         -> Writes a char from register to stdout
+* `J #<N>`    -> **J**umps to line number `<N>`
+* `J $<N>`    -> **J**umps to line number pointed by `<N>`
+* `= #<N>`    -> Skips next line if `<N>` is equals to register
+* `= $<N>`    -> Skips next line if value pointed by `<N>` is equal to register
+* `R`         -> **R**eads a char from stdin to register
+* `W`         -> **W**rites a char from register to stdout
 
