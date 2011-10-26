@@ -31,6 +31,11 @@ W
 R
 + $1    ;Sums register with value in memory entry
 - #48
+G #1
+
+S #10   ;\n
+W
+S $1
 W
 
 
