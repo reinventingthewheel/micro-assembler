@@ -33,6 +33,9 @@
 #3  isIndirectOperand
 #4  skipExecution
 #5  skipExecutionCopy
+#6  registerCopy
+#7  operandCopy2
+#8  shouldSkip
 #18 registerIsNegative
 #19 register
 #20 instructionsStart
@@ -322,6 +325,83 @@
 
 
 
+    ============ '=' instruction  ======================================
+    +                                       #isDesiredInstruction = true
+    >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] > -------
+    [                                           #if instruction != 'S'
+        +++++++
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<< -        #isDesiredChar = false
+
+        >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        [
+            -
+            < <<<< [<<<<] <<<<<<<<<<<<<<<<<<< +
+            >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        ]                                #tmp = instruction
+    ]
+
+    +++++++
+    < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+    [
+        >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        -------
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        [
+            - >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+            + < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        ]
+    ]#instruction = tmp
+
+    ============ Symbols ============
+    #0  isDesiredInstruction
+    #1  tmp
+    #2  operandCopy
+    #3  isIndirectOperand
+    #4  skipExecution
+    #5  skipExecutionCopy
+    #6  registerCopy
+    #7  operandCopy2
+    #8  shouldSkip
+    #18 registerIsNegative
+    #19 register
+    #20 instructionsStart
+    =================================
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+
+        >>>>>>>> +                              #shouldSkip = true
+
+        >>>>>>>>>>>                             #go to register
+        [                                       #while register
+            <<<<<<<<<<< [-]                         #shouldSkip = false
+            <<<<<<                                  #go to operandCopy
+            [                                       #if operandCopy
+                >>>>>> +                                #shouldSkip = true
+                <<<<<< -                                #decrement operandCopy
+                [ - >>>>> + <<<<< ]                     #operandCopy2 = operandCopy
+            ]
+            >>>>> [ - <<<<< + >>>>> ]               #operandCopy = operandCopy2
+
+            < +                                     #increment registerCopy
+            >>>>>>>>>>>>> -                         #decrement register
+        ]
+
+        <<<<<<<<<<<<< [ - >>>>>>>>>>>>> + <<<<<<<<<<<<< ] #register = registerCopy
+
+        <<<<                                    #go to operadCopy
+        [                                       #if operandCopy
+            >>>>>> [-]                              #shouldSkip = false
+            <<<<<< [-]                              #operandCopy = 0
+        ]
+
+        <<                                      #go to isDesiredInstruction
+    ]
+    ============================================================================
+
+
+
+
     ============ (plus) instruction  ======================================
     +                                       #isDesiredInstruction = true
     >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] > ----
@@ -399,8 +479,18 @@
     ]
     ============================================================================
 
+    ====== Skipping line if needed ===========================
+    >>>>>>>>                                #go to shouldSkip
+    [                                       #if shouldSkip
+        [-]                                     #shouldSkip = false
+        >>>>>>>>>>>> >>>> [>>>>] +              #marks current instructionBlock as executed
+        >>>> -                                  #marks next instructionBlock to execution
+        <<<< [<<<<] <<<<<<<<<<<<                #go to shouldSkip
+    ]
+    <<<<<<<<                                #go to isDesiredInstruction
+    ==========================================================
 
-    >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] +      #marks control slot to 1
+    >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] +      #marks current instructionBlock as executed
     >>>>-                                   #marks next instructionBlock to execution
     >                                       #go to instruction slot
 ]
