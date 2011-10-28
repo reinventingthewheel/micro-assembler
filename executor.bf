@@ -36,6 +36,7 @@
 #6  registerCopy
 #7  operandCopy2
 #8  shouldSkip
+#9  shouldAdvanceInstruction
 #18 registerIsNegative
 #19 register
 #20 instructionsStart
@@ -119,6 +120,8 @@
     ]
 
     <<<                                     #go to isDesiredInstruction
+    >>>>>>>>> +                             #shouldAdvanceInstruction = true
+    <<<<<<<<<                               #go to isDesiredInstruction
 
     ============ 'W' instruction  ======================================
     +                                       #isDesiredInstruction = true
@@ -575,18 +578,79 @@
     ]
     ============================================================================
 
-    ====== Skipping line if needed ===========================
-    >>>>>>>>                                #go to shouldSkip
-    [                                       #if shouldSkip
-        [-]                                     #shouldSkip = false
-        >>>>>>>>>>>> >>>> [>>>>] +              #marks current instructionBlock as executed
-        >>>> -                                  #marks next instructionBlock to execution
-        <<<< [<<<<] <<<<<<<<<<<<                #go to shouldSkip
-    ]
-    <<<<<<<<                                #go to isDesiredInstruction
-    ==========================================================
 
-    >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] +      #marks current instructionBlock as executed
-    >>>>-                                   #marks next instructionBlock to execution
-    >                                       #go to instruction slot
+    ============ 'J' instruction  ======================================
+    === ****** IMPORTANT: jump should always be the last instruction *****
+    ===
+
+    +                                       #isDesiredInstruction = true
+    >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] > ------
+    [                                           #if instruction != 'J'
+        ++++++
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<< -        #isDesiredChar = false
+
+        >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        [
+            -
+            < <<<< [<<<<] <<<<<<<<<<<<<<<<<<< +
+            >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        ]                                #tmp = instruction
+    ]
+
+    ++++++
+    < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+    [
+        >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        ------
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        [
+            - >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+            + < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        ]
+    ]#instruction = tmp
+
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+
+        >>>>>>>>> [-]                           #shouldGoAhead = false
+
+        >>>>>>>>>>> >>>> [>>>>] +               #marks current instructionBlock as off
+        [<<<<] >>>> -                           #marks first instructionBlock as on
+
+        ========== Writing Value in Memory ===============
+        <<<< [<<<<] <<<<<<<<<<<<<<<<<<          #go to operandCopy
+        -                                       #decrement it once
+        [                                       #while operandCopy
+            -                                       #decrement operandCopy
+            >>>>>>>>>>>>>>>>>> >>>> [>>>>] +        #marks current instructionBlock as off
+            >>>> -                                  #marks next instructionBlock as on
+            <<<< [<<<<] <<<<<<<<<<<<<<<<<<          #go to operandCopy
+        ]
+
+        <<                                      #go to isDesiredInstruction
+    ]
+    ============================================================================
+
+
+    >>>>>>>>>                               #go to shouldAdvanceInstruction
+    [                                       #if shouldAdvanceInstruction
+        [-]                                     #shouldAdvanceInstruction = false
+
+        ====== Skipping line if needed ===========================
+        <                                       #go to shouldSkip
+        [                                           #if shouldSkip
+            [-]                                         #shouldSkip = false
+            >>>>>>>>>>>> >>>> [>>>>] +                  #marks current instructionBlock as executed
+            >>>> -                                      #marks next instructionBlock to execution
+            <<<< [<<<<] <<<<<<<<<<<<                    #go to shouldSkip
+        ]
+        ==========================================================
+
+        >>>>>>>>>>>> >>>> [>>>>] +                  #marks current instructionBlock as executed
+        >>>> -                                      #marks next instructionBlock to execution
+        <<<< [<<<<] <<<<<<<<<<<                 #go to shouldAdvanceInstruction
+    ]
+
+    >>>>>>>>>>> >>>> [>>>>] >                   #go to instruction slot
 ]

@@ -1,0 +1,26 @@
+R
+W
+G $0    ;Stores read value into memory #0
+
+S #10
+W       ;prints \n
+
+S $0    ;restores read value from memory 1 to register
+
+= #97
+J #17
+;*********** IF register == 'a':
+S #61; '='
+W
+J #23
+
+;*********** ELSE:
+S #33; '!'
+W
+S #61; '='
+W
+
+;*********** END IF
+S #10
+W
+W
