@@ -1,44 +1,44 @@
-S #83   ;S
+S 83   ;S
 W
-S #117  ;u
+S 117  ;u
 W
-S #109  ;m
+S 109  ;m
 W
-S #10   ;\n
+S 10   ;\n
 W
 W
 
-S #97   ;a
+S 97   ;a
 W
-S #58   ;:
+S 58   ;:
 W
-S #32   ;\s
+S 32   ;\s
 W
 
 R
-G #1    ;Saves operand in memory entry #1
+G 1    ;Saves operand in memory entry 1
 
-S #10   ;\n
+S 10   ;\n
 W
 
-S #98   ;b
+S 98   ;b
 W
-S #58   ;:
+S 58   ;:
 W
-S #32   ;\s
+S 32   ;\s
 W
 
 R
 + $1    ;Sums register with value in memory entry
-- #48
-G #1
+- 48
+G 1
 
-S #10   ;\n
+S 10   ;\n
 W
 S $1
 W
 
 
-S #10   ;\n
+S 10   ;\n
 W
 W

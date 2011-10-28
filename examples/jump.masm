@@ -1,6 +1,6 @@
 R
 W
-G $0    ;Stores read value into memory #0
+G 0    ;Stores read value into memory #0
 
 S #10
 W       ;prints \n
