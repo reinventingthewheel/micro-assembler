@@ -314,9 +314,13 @@
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
 
-        >>>>>>>>>>>>>>>>>>>                     #go to register
-        [-]                                     #resets register
-
+        >>>>>>>>>>>>>>>>>>                      #go to isNegativeRegister
+        [                                       #if isNegativeRegister
+            [-]                                     #isNegativeRegister = false
+            > [+]                                   #resets Register
+            <                                       #go to isNegativeRegister
+        ]
+        > [-]                                     #resets register
 
         <<<<<<<<<<<<<<<<<                       #go to operandCopy
         [ - >>>>>>>>>>>>>>>>> + <<<<<<<<<<<<<<<<< ] #register = operandCopy
