@@ -1,9 +1,9 @@
 #! /bin/make
 
-tmp:
-	@touch /tmp/tmpmasm.bf
+masm.bf: src/program-dumper.bf src/execution-loop.bf tools/mkdumper.py
+	cp src/program-dumper.bf masm.bf
+	python tools/mkdumper.py < src/execution-loop.bf >> masm.bf
 
-%.masm: tmp
-	@cat $*.masm | bf masm.bf > /tmp/tmpmasm.bf
-	@cat executor.bf >> /tmp/tmpmasm.bf
-	@bf /tmp/tmpmasm.bf
+%.masm: masm.bf
+	bf masm.bf < $*.masm > $*.bf
+
