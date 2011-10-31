@@ -37,6 +37,7 @@
 #7  operandCopy2
 #8  shouldSkip
 #9  shouldAdvanceInstruction
+#17 registerIsNegativeCopy
 #18 registerIsNegative
 #19 register
 #20 instructionsStart
@@ -363,7 +364,18 @@
 
         >>>>>>>> +                              #shouldSkip = true
 
-        >>>>>>>>>>>                             #go to register
+        >>>>>>>>>>                              #go to isRegisterNegative
+        [                                       #if isRegisterNegative
+            <<<<<<<<<< [-]                          #shouldSkip = false
+            >>>>>>>>>> [-]                          #isRegisterNegative = 0
+            < +                                     #isRegisterNegativeCopy = true
+            >> [ + <<<<<<<<<<<<<
+                 - >>>>>>>>>>>>> ]                  #registerCopy = register
+            <                                       #go to isRegisterNegative
+        ]
+        < [ - > + < ]                           #isRegisterNegative = isRegisterNegativeCopy
+
+        >>                                      #go to register
         [                                       #while register
             <<<<<<<<<<< [-]                         #shouldSkip = false
             <<<<<<                                  #go to operandCopy
@@ -378,7 +390,14 @@
             >>>>>>>>>>>>> -                         #decrement register
         ]
 
-        <<<<<<<<<<<<< [ - >>>>>>>>>>>>> + <<<<<<<<<<<<< ] #register = registerCopy
+        < [                                     #if isRegisterNegative
+            [-]                                     #isRegisterNegative = 0
+            <<<<<<<<<<<< [ + >>>>>>>>>>>>>
+                           - <<<<<<<<<<<<< ]        #register = registerCopy
+            >>>>>>>>>>>>                            #go to isRegisterNegative
+        ]
+        <<<<<<<<<<<< [ - >>>>>>>>>>>>>
+                       + <<<<<<<<<<<<< ]       #register = registerCopy
 
         <<<<                                    #go to operadCopy
         [                                       #if operandCopy
