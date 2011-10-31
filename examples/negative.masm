@@ -36,14 +36,36 @@ S 0
 > 10
 J 43
 ;*********** IF register == 10:
-S 61; '='
+S 62; '>'
 W
 J 49
 
 ;*********** ELSE:
 S 33; '!'
 W
-S 61; '='
+S 62; '>'
+W
+
+;*********** END IF
+S 10
+W
+W
+
+
+========= Less than Test with negative register ==========
+S 0
+- 10
+< 0
+J 65
+;*********** IF register == 10:
+S 60; '<'
+W
+J 71
+
+;*********** ELSE:
+S 71; '!'
+W
+S 60; '<'
 W
 
 ;*********** END IF

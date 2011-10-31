@@ -442,7 +442,18 @@
 
         >>>>>>>> [-]                            #shouldSkip = false
 
-        >>>>>>>>>>>                             #go to register
+        >>>>>>>>>>                              #go to isRegisterNegative
+        [                                       #if isRegisterNegative
+            <<<<<<<<<< +                            #shouldSkip = true
+            >>>>>>>>>> [-]                          #isRegisterNegative = 0
+            < +                                     #isRegisterNegativeCopy = true
+            >> [ + <<<<<<<<<<<<<
+                 - >>>>>>>>>>>>> ]                  #registerCopy = register
+            <                                       #go to isRegisterNegative
+        ]
+        < [ - > + < ]                           #isRegisterNegative = isRegisterNegativeCopy
+
+        >>                                      #go to register
         [                                       #while register
             <<<<<<<<<<<<<<<<<                       #go to operandCopy
             [                                       #if operandCopy
@@ -455,7 +466,14 @@
             >>>>>>>>>>>>> -                         #decrement register
         ]
 
-        <<<<<<<<<<<<< [ - >>>>>>>>>>>>> + <<<<<<<<<<<<< ] #register = registerCopy
+        < [                                     #if isRegisterNegative
+            [-]                                     #isRegisterNegative = 0
+            <<<<<<<<<<<< [ + >>>>>>>>>>>>>
+                           - <<<<<<<<<<<<< ]        #register = registerCopy
+            >>>>>>>>>>>>                            #go to isRegisterNegative
+        ]
+        <<<<<<<<<<<< [ - >>>>>>>>>>>>>
+                       + <<<<<<<<<<<<< ]       #register = registerCopy
 
         <<<<                                    #go to operadCopy
         [                                       #if operandCopy
