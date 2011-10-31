@@ -617,3 +617,5 @@ Indirect    : 1
 
     >>>>                                    #go to readChar
 ]
+
++++++++++++++++++++++++++++++++++++++++++++.    #Dumps end of instructions (plus)
