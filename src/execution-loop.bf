@@ -279,50 +279,35 @@
         <                                       #go to register
 
 
-        ===== Writing negative register into memory ====
+        ===== Writing negative flag into memory ====
         < [                                         #if isRegisterNegative
             [-]                                         #isRegisterNegative = 0
             < +                                         #isRegisterNegativeCopy = true
 
-            >> [                                        #while register
-                +                                           #increment it
-                <<<<<<<<<<<<<<<<<< -                        #decrement tmp
-
-                >>>>>>>>>>>>>>>>>>> >>>> [>>>>]             #go to current instruction
-                >>>> [>>>>] >>> [>>>] > [-]+ > -            #decrement current memory value
-
-                << <<< [<<<] <<<< [<<<<] <<<< [<<<<]        #go to instructions
-                <                                           #go to register
-            ]
-            <                                       #go to isRegisterNegative
+            >>> >>>> [>>>>]                             #go to current instruction
+            >>>> [>>>>] >>> [>>>] > +                   #decrement sets negativeFlag
+            < <<< [<<<] <<<< [<<<<] <<<< [<<<<]         #go to instructions
+            <<                                          #go to registerIsNegative
         ]
         < [ - > + < ]                               #isRegisterNegative = isRegisterNegativeCopy
         ==================================================
 
 
-        ===== Writing positive register into memory ====
+        ===== Writing register into memory ====
         >> [                                    #while register
             -                                       #decrement it
             <<<<<<<<<<<<<<<<<< +                    #increment tmp
 
             >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
-            >>>> [>>>>] >>> [>>>] > [-] > +         #increment current memory value
+            >>>> [>>>>] >>> [>>>] >> +              #increment current memory value
 
             << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
             <                                       #go to register
         ]
         ==================================================
 
-        < [                                         #if isRegisterNegative
-            [-]                                         #isRegisterNegative = 0
-            < +                                         #isRegisterNegativeCopy = true
-            <<<<<<<<<<<<<<<< [ + >>>>>>>>>>>>>>>>>>
-                - <<<<<<<<<<<<<<<<<< ]                  #register = tmp
-            >>>>>>>>>>>>>>>>>
-        ]
-        < [ - > + < ]                               #isRegisterNegative = isRegisterNegativeCopy
-        <<<<<<<<<<<<<<<< [ - >>>>>>>>>>>>>>>>>>
-                    + <<<<<<<<<<<<<<<<<< ]                  #register = tmp
+        <<<<<<<<<<<<<<<<<< [ - >>>>>>>>>>>>>>>>>>
+                    + <<<<<<<<<<<<<<<<<< ]      #register = tmp
 
         >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
         >>>> [>>>>] >>> [>>>] +                 #sets current memory to false
