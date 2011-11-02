@@ -37,8 +37,9 @@
 #7  operandCopy2
 #8  shouldSkip
 #9  shouldAdvanceInstruction
-#10 isNegativeOperand
-#11 isNegativeOperandCopy
+#10 isZero
+#11 isNegativeOperand
+#12 isNegativeOperandCopy
 #17 registerIsNegativeCopy
 #18 registerIsNegative
 #19 register
@@ -100,22 +101,23 @@
         [                                       #if is negative
             -                                       #decrement it
             < <<< [<<<] <<<< [<<<<] <<<< [<<<<]     #go to instructions
-            <<<<<<<<<< + > +                        #operandIsNegative = operandIsNegativeCopy = true
-            >>>>>>>>> >>>> [>>>>]                   #go to current instruction
+            <<<<<<<<< + > +                         #operandIsNegative = operandIsNegativeCopy = true
+            >>>>>>>> >>>> [>>>>]                    #go to current instruction
             >>>> [>>>>] >>> [>>>] >                 #go to current memory entry negative flag
         ]
         < <<< [<<<] <<<< [<<<<] <<<< [<<<<]     #go to instructions
 
-        <<<<<<<<< [                             #if operandIsNegativeCopy
-            >>>>>>>>> >>>> [>>>>]                   #go to current instruction
+
+        <<<<<<<< [                             #if operandIsNegativeCopy
+            >>>>>>>> >>>> [>>>>]                    #go to current instruction
             >>>> [>>>>] >>> [>>>] > +               #go to current memory entry negative flag
             < <<< [<<<] <<<< [<<<<] <<<< [<<<<]     #go to instructions
-            <<<<<<<<< -                             #operandIsNegativeCopy = false
+            <<<<<<<< -                              #operandIsNegativeCopy = false
         ]                              #restores operand negative flag
         ===========================================
 
 
-        >>>>>>>>> >>>> [>>>>]                   #go to current instruction
+        >>>>>>>> >>>> [>>>>]                    #go to current instruction
         >>>> [>>>>] >>> [>>>] >>                #go to current memory entry value
         [                                       #while current memory value
             -                                       #decrement it
@@ -255,7 +257,6 @@
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
 
-
         >>>>>>>>>>>>>>>>>>>> >>>> [>>>>]        #go to current instruction
 
         ========== Writing Value in Memory ===============
@@ -285,7 +286,7 @@
             < +                                         #isRegisterNegativeCopy = true
 
             >>> >>>> [>>>>]                             #go to current instruction
-            >>>> [>>>>] >>> [>>>] > +                   #decrement sets negativeFlag
+            >>>> [>>>>] >>> [>>>] > +                   #sets negativeFlag
             < <<< [<<<] <<<< [<<<<] <<<< [<<<<]         #go to instructions
             <<                                          #go to registerIsNegative
         ]
@@ -307,7 +308,7 @@
         ==================================================
 
         <<<<<<<<<<<<<<<<<< [ - >>>>>>>>>>>>>>>>>>
-                    + <<<<<<<<<<<<<<<<<< ]      #register = tmp
+            + <<<<<<<<<<<<<<<<<< ]      #register = tmp
 
         >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
         >>>> [>>>>] >>> [>>>] +                 #sets current memory to false
@@ -352,20 +353,14 @@
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
 
-        >>>>>>>>>>>>>>>>>>                      #go to isNegativeRegister
-        [                                       #if isNegativeRegister
-            [-]                                     #isNegativeRegister = false
-            > [+]                                   #resets Register
-            <                                       #go to isNegativeRegister
-        ]
-        > [-]                                     #resets register
+        >>>>>>>>>>>>>>>>>> [-] > [-]            #resets negativeFlag and register
 
-        <<<<<<<<< [                             #if operandIsNegative
-            >>>>>>>> +                              #registerIsNegative = true
-            <<<<<<<< [-]                            #operandIsNegative = false
+        <<<<<<<< [                              #if operandIsNegative
+            >>>>>>> +                               #registerIsNegative = true
+            <<<<<<< [-]                             #operandIsNegative = false
         ]
 
-        <<<<<<<<                                #go to operandCopy
+        <<<<<<<<<                               #go to operandCopy
         [ - >>>>>>>>>>>>>>>>> + <<<<<<<<<<<<<<<<< ] #register = operandCopy
 
 
