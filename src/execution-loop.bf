@@ -724,7 +724,40 @@
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
 
-        >>                                      #go to operandCopy
+        ==== Negative minus = Turns into plus operation ====
+        >>>>>>>>>>> [                           #if isNegativeOperand
+            [-]                                     #make it false
+
+            <<<<<<<<<                                   #go to operandCopy
+            [                                           #while operandCopy
+                +                                           #increment operandCopy
+                >>>>>>>> +                                  #isZero = true
+                >>>>>>>>>                                   #go to register
+                [                                           #if register != 0
+                    <<<<<<<<< -                                 #isZero = false
+                    >>>>>>>>> [ - <<<<<<<<<<<<<<<<<<
+                        + >>>>>>>>>>>>>>>>>> ]                  #tmp = register
+                ]
+
+                <<<<<<<<<<<<<<<<<< [ - >>>>>>>>>>>>>>>>>>
+                        + <<<<<<<<<<<<<<<<<< ]              #register = tmp
+
+                >>>>>>>>>                                   #go to isZero
+                [                                           #if isZero
+                    -                                           #isZero = false
+                    >>>>>>>> [-]                                #isRegisterNegative = false
+                    <<<<<<<<                                    #go to isZero
+                ]
+
+                >>>>>>>>> +                             #decrement register
+                <<<<<<<<<<<<<<<<<                       #go to operandCopy
+            ] #register minus operandCopy
+
+            >>>>>>>>>                           #go to isNegativeOperand
+        ]
+        ===================================================
+
+        <<<<<<<<<                                   #go to operandCopy
         [                                           #while operandCopy
             -                                       #decrement operandCopy
             >>>>>>>> +                                  #isZero = true

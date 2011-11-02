@@ -25,3 +25,27 @@ G 0
     S 10
     W
     W
+
+
+; =========  Negative Minus tests =================
+    ; === Negative register - positive
+    S $0
+    - 10
+    + 85
+    W
+
+    ; === Negative register - negative
+    S 0
+    - 10
+    - $0
+    + 65
+    W
+
+    ; === Positive register - negative
+    S 55
+    - $0
+    W
+
+    S 10
+    W
+    W
