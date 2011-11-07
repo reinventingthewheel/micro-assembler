@@ -295,28 +295,60 @@
             <<<<<<<<<<<<<<<<<<                      #go to operandCopy
         ]
 
-        >>>>>>>>>>>>>>>>>> >>>> [>>>>]          #go to current instruction
-        >>>> [>>>>] >>> [>>>] >>[-]             #reset current memory entry value
+        >>>>>>>>> [                            #if flagRegisterNegative
+            >>>>>>>>> >>>> [>>>>]                   #go to current instruction
+            >>>> [>>>>] >>> [>>>] >[-]+ >[-]        #reset current memory entry negative flag and value
 
-
-        << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
-        <                                       #go to register
-        [                                       #while register
-            -                                       #decrement it
-            <<<<<<<<<<<<<<<<<< +                    #increment tmp
-
-            >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
-            >>>> [>>>>] >>> [>>>] >>+               #increment current memory value
 
             << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
             <                                       #go to register
+            [                                       #while register
+                +                                       #increment it
+                <<<<<<<<<<<<<<<<<< -                    #decrement tmp
+
+                >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+                >>>> [>>>>] >>> [>>>] >>-               #decrement current memory value
+
+                << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+                <                                       #go to register
+            ]
+
+            <<<<<<<<<<<<<<<<<<                      #go to tmp
+            [                                       #while tmp
+                +                                       #increment it
+                >>>>>>>>>>>>>>>>>> -                    #decrement register
+                <<<<<<<<<<<<<<<<<<                      #go to tmp
+            ]
+
+            >>>>>>>>>> [-]                      #flagRegisterNegative = false
         ]
 
-        <<<<<<<<<<<<<<<<<<                      #go to tmp
-        [                                       #while tmp
-            -                                       #decrement it
-            >>>>>>>>>>>>>>>>>> +                    #increment register
+        > [                            #if flagRegisterPositive
+            >>>>>>>> >>>> [>>>>]                    #go to current instruction
+            >>>> [>>>>] >>> [>>>] >[-] >[-]         #reset current memory entry negative flag and value
+
+
+            << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+            <                                       #go to register
+            [                                       #while register
+                -                                       #decrement it
+                <<<<<<<<<<<<<<<<<< +                    #increment tmp
+
+                >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+                >>>> [>>>>] >>> [>>>] >>+               #increment current memory value
+
+                << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+                <                                       #go to register
+            ]
+
             <<<<<<<<<<<<<<<<<<                      #go to tmp
+            [                                       #while tmp
+                -                                       #decrement it
+                >>>>>>>>>>>>>>>>>> +                    #increment register
+                <<<<<<<<<<<<<<<<<<                      #go to tmp
+            ]
+
+            >>>>>>>>>>> [-]                     #flagRegisterPositive = false
         ]
 
         >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
