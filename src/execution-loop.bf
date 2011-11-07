@@ -420,34 +420,72 @@
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
 
-        >>>>>>>>>>>> [                          #if flagRegisterPositive
-            <<<< +                                  #shouldSkip = true
+        >>>>>>>>>>> [                           #if flagRegisterNegative
+            >> [                                    #if flagOperandNegative
+                <<<<<< +                                #shouldSkip = true
 
-            >>>>>>>>>>>                             #go to register
-            [                                       #while register
-                <<<<<<<<<<< [-]                         #shouldSkip = false
-                <<<<<<                                  #go to operandCopy
-                [                                       #if operandCopy
-                    >>>>>> +                                #shouldSkip = true
-                    <<<<<< -                                #decrement operandCopy
-                    [ - >>>>> + <<<<< ]                     #operandCopy2 = operandCopy
+                >>>>>>>>>>>                             #go to register
+                [                                       #while register
+                    <<<<<<<<<<< [-]                         #shouldSkip = false
+                    <<<<<<                                  #go to operandCopy
+                    [                                       #if operandCopy
+                        >>>>>> +                                #shouldSkip = true
+                        <<<<<< +                                #increment operandCopy
+                        [ + >>>>> - <<<<< ]                     #operandCopy2 = operandCopy
+                    ]
+                    >>>>> [ + <<<<< - >>>>> ]               #operandCopy = operandCopy2
+
+                    < -                                     #decrement registerCopy
+                    >>>>>>>>>>>>> +                         #increment register
                 ]
-                >>>>> [ - <<<<< + >>>>> ]               #operandCopy = operandCopy2
 
-                < +                                     #increment registerCopy
-                >>>>>>>>>>>>> -                         #decrement register
+                <<<<<<<<<<<<< [ + >>>>>>>>>>>>>
+                    - <<<<<<<<<<<<< ]                   #register = registerCopy
+
+                <<<<                                    #go to operadCopy
+                [                                       #if operandCopy
+                    >>>>>> [-]                              #shouldSkip = false
+                    <<<<<< [+]                              #operandCopy = 0
+                ]
+
+                >>>>>>>>>>> [-]                        #flagOperandNegative = false
             ]
 
-            <<<<<<<<<<<<< [ - >>>>>>>>>>>>>
-                + <<<<<<<<<<<<< ]                   #register = registerCopy
+            << [-]                                  #flagRegisterNegative = false
+        ]
 
-            <<<<                                    #go to operadCopy
-            [                                       #if operandCopy
-                >>>>>> [-]                              #shouldSkip = false
-                <<<<<< [-]                              #operandCopy = 0
+        > [                                     #if flagRegisterPositive
+            >> [                                    #if flagOperandPositive
+                <<<<<< +                                #shouldSkip = true
+
+                >>>>>>>>>>>                             #go to register
+                [                                       #while register
+                    <<<<<<<<<<< [-]                         #shouldSkip = false
+                    <<<<<<                                  #go to operandCopy
+                    [                                       #if operandCopy
+                        >>>>>> +                                #shouldSkip = true
+                        <<<<<< -                                #decrement operandCopy
+                        [ - >>>>> + <<<<< ]                     #operandCopy2 = operandCopy
+                    ]
+                    >>>>> [ - <<<<< + >>>>> ]               #operandCopy = operandCopy2
+
+                    < +                                     #increment registerCopy
+                    >>>>>>>>>>>>> -                         #decrement register
+                ]
+
+                <<<<<<<<<<<<< [ - >>>>>>>>>>>>>
+                    + <<<<<<<<<<<<< ]                   #register = registerCopy
+
+                <<<<                                    #go to operadCopy
+                [                                       #if operandCopy
+                    >>>>>> [-]                              #shouldSkip = false
+                    <<<<<< [-]                              #operandCopy = 0
+                ]
+
+                >>>>>>>>>>>> [-]                        #flagOperandPositive = false
             ]
 
-            >>>>>>>>>> [-]                          #flagRegisterPositive = false
+            << [-]                                  #flagRegisterPositive = false
         ]
 
         <<<<<<<<<<<<                            #go to isDesiredInstruction
