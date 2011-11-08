@@ -397,8 +397,9 @@
             >>>>>>> [-] > [+]                       #resets register
             <<<<<<<< [-]                            #flagRegisterNegative = false
         ]
+
         > [                                     #if flagRegisterPositive
-            >>>>>> [-] > [-]                             #resets register
+            >>>>>> [-] > [-]                        #resets register
             <<<<<<< [-]                             #flagRegisterPositive = false
         ]
 
@@ -453,7 +454,7 @@
 
         >>>>>>>>>>> [                           #if flagRegisterNegative
             >> [                                    #if flagOperandNegative
-                <<<<<< +                                #shouldSkip = true
+                <<<<< +                                #shouldSkip = true
 
                 >>>>>>>>>>>                             #go to register
                 [                                       #while register
@@ -461,13 +462,13 @@
                     <<<<<<                                  #go to operandCopy
                     [                                       #if operandCopy
                         >>>>>> +                                #shouldSkip = true
-                        <<<<<< +                                #increment operandCopy
+                        <<<<<< +                                #decrement operandCopy
                         [ + >>>>> - <<<<< ]                     #operandCopy2 = operandCopy
                     ]
                     >>>>> [ + <<<<< - >>>>> ]               #operandCopy = operandCopy2
 
-                    < -                                     #decrement registerCopy
-                    >>>>>>>>>>>>> +                         #increment register
+                    < -                                     #increment registerCopy
+                    >>>>>>>>>>>>> +                         #decrement register
                 ]
 
                 <<<<<<<<<<<<< [ + >>>>>>>>>>>>>
@@ -554,7 +555,43 @@
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
 
-        >>>>>>>>>>>> [                          #if flagRegisterPositive
+        >>>>>>>>>>> [                           #if flagRegisterNegative
+            ======= Negative register with negative operands    ========
+            ======= It turns into a modular gt                  ========
+            >> [                                    #if flagOperandNegative
+                <<<<< [-]                               #shouldSkip = false
+                >>>>>>>>>>>                                 #go to register
+                [                                           #while register
+                    <<<<<<<<<<< +                               #shouldSkip = true
+                    <<<<<<                                      #go to operandCopy
+                    [                                           #if operandCopy
+                        >>>>>> [-]                                  #shouldSkip = false
+                        <<<<<< +                                    #decrement operandCopy
+                        [ + >>>>> - <<<<< ]                         #operandCopy2 = operandCopy
+                    ]
+                    >>>>> [ + <<<<< - >>>>> ]                   #operandCopy = operandCopy2
+
+                    < -                                         #increment registerCopy
+                    >>>>>>>>>>>>> +                             #decrement register
+                ]
+
+                <<<<<<<<<<<<< [ + >>>>>>>>>>>>>
+                    - <<<<<<<<<<<<< ]                   #register = registerCopy
+
+                >>>>>>> [-]                         #flagOperandNegative = false
+            ]
+
+            ======= Negative is always lt than positive operands ========
+            > [                                     #if flagOperandPositive
+                <<<<<< +                                #shouldSkip = true
+                >>>>>> [-]                              #flagOperandPositive = false
+            ]
+            ===========================================================
+
+            <<< [-]                              #flagRegisterNegative = false
+        ]
+
+        > [                                     #if flagRegisterPositive
             >> [                                    #if flagOperandPositive
                 <<<<<< [-]                              #shouldSkip = false
 
@@ -620,7 +657,41 @@
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
 
-        >>>>>>>>>>>> [                          #if flagRegisterPositive
+        ======= Negative register can only be greater than negative operands ========
+        ======= It turns into a modular lt                                   ========
+        >>>>>>>>>>> [                          #if flagRegisterNegative
+            >> [                                    #if flagOperandNegative
+                <<<<< [-]                               #shouldSkip = false
+
+                >>>>>>>>>>>                             #go to register
+                [                                       #while register
+                    <<<<<<<<<<<<<<<<<                       #go to operandCopy
+                    [                                       #if operandCopy
+                        +                                       #increment operandCopy
+                        [ + >>>>> - <<<<< ]                     #operandCopy2 = operandCopy
+                    ]
+                    >>>>> [ + <<<<< - >>>>> ]               #operandCopy = operandCopy2
+
+                    < -                                     #decrement registerCopy
+                    >>>>>>>>>>>>> +                         #increment register
+                ]
+
+                <<<<<<<<<<<<< [ + >>>>>>>>>>>>>
+                    - <<<<<<<<<<<<< ]                   #register = registerCopy
+
+                <<<<                                    #go to operadCopy
+                [                                       #if operandCopy
+                    >>>>>> +                                #shouldSkip = true
+                    <<<<<< [+]                              #operandCopy = 0
+                ]
+
+                >>>>>>>>>>> [-]                        #flagOperandNegative = false
+            ]
+            << [-]                          #flagRegisterNegative = false
+        ]
+        ===========================================================
+
+        > [                                     #if flagRegisterPositive
             >> [                                    #if flagOperandPositive
                 <<<<<< [-]                              #shouldSkip = false
                 >>>>>>>>>>>                                 #go to register
