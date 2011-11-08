@@ -240,7 +240,7 @@
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
 
-        >>>>>>>>>>>>>>>>>>> ,                   #read value from stdIn to register
+        >>>>>>>>>>>>>>>>>> [-] > ,                   #read value from stdIn to register
 
         <<<<<<<<<<<<<<<<<<<                     #go to isDesiredInstruction
     ]
@@ -324,7 +324,7 @@
 
         > [                            #if flagRegisterPositive
             >>>>>>>> >>>> [>>>>]                    #go to current instruction
-            >>>> [>>>>] >>> [>>>] >[- >[+]<]+ >[-]  #reset current memory entry negative flag and value
+            >>>> [>>>>] >>> [>>>] > [- >[+]<] >[-]  #reset current memory entry negative flag and value
 
 
             << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
@@ -398,7 +398,7 @@
             <<<<<<<< [-]                            #flagRegisterNegative = false
         ]
         > [                                     #if flagRegisterPositive
-            >>>>>>> [-]                             #resets register
+            >>>>>> [-] > [-]                             #resets register
             <<<<<<< [-]                             #flagRegisterPositive = false
         ]
 
