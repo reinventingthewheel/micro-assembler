@@ -42,7 +42,6 @@
 #20 instructionsStart
 =================================
 
-+                                       #sets end of program
 [<<<<]                                  #go to instructionsStart
 >>>>                                    #go to first instructionBlock
 -                                       #marks controlSlot to 0
