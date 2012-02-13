@@ -4,14 +4,41 @@ S 0
 + 75
 W
 
+S 10
+W
+W
+
+========= Equals Test with negative register ==========
 S 0
 - 10
 = 10
-J 16
+J 21
 ;*********** IF register == 10:
 S 61; '='
 W
-J 22
+J 27
+
+;*********** ELSE:
+S 33; '!'
+W
+S 61; '='
+W
+
+;*********** END IF
+S 10
+W
+W
+
+
+========= Greater than Test with negative register ==========
+S 0
+- 10
+> 10
+J 43
+;*********** IF register == 10:
+S 61; '='
+W
+J 49
 
 ;*********** ELSE:
 S 33; '!'
