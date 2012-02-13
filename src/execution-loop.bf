@@ -720,7 +720,11 @@
                 [                                           #if isZero
                     -                                           #isZero = false
                     >>>>>>>> [-] +                              #isRegisterNegative = true
-                    <<<<<<<<                                    #go to isZero
+                    <<<<<<<<<<<<<<<< [
+                        + >>>>>>>>>>>>>>>>>
+                        - <<<<<<<<<<<<<<<<<
+                    ]
+                    >>>>>>>>                                #go to isZero
                 ]
 
                 >>>>>>>>> -                             #decrement register
@@ -767,7 +771,11 @@
                 [                                           #if isZero
                     -                                           #isZero = false
                     >>>>>>>> [-]                                #isRegisterNegative = false
-                    <<<<<<<<                                    #go to isZero
+                    <<<<<<<<<<<<<<<< [
+                        - >>>>>>>>>>>>>>>>>
+                        + <<<<<<<<<<<<<<<<<
+                    ]
+                    >>>>>>>>                                #go to isZero
                 ]
 
                 >>>>>>>>> +                             #increment register
@@ -851,7 +859,11 @@
                 [                                           #if isZero
                     -                                           #isZero = false
                     >>>>>>>> [-]                                #isRegisterNegative = false
-                    <<<<<<<<                                    #go to isZero
+                    <<<<<<<<<<<<<<<< [
+                        + >>>>>>>>>>>>>>>>>
+                        + <<<<<<<<<<<<<<<<<
+                    ]
+                    >>>>>>>>                                #go to isZero
                 ]
 
                 >>>>>>>>> +                             #increment register
@@ -898,7 +910,11 @@
                 [                                           #if isZero
                     -                                           #isZero = false
                     >>>>>>>> [-] +                              #isRegisterNegative = true
-                    <<<<<<<<                                    #go to isZero
+                    <<<<<<<<<<<<<<<< [
+                        - >>>>>>>>>>>>>>>>>
+                        - <<<<<<<<<<<<<<<<<
+                    ]
+                    >>>>>>>>                                #go to isZero
                 ]
 
                 >>>>>>>>> -                             #decrement register
