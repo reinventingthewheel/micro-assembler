@@ -583,12 +583,29 @@
             >>>>>>>>>                                   #go to register
             [                                           #if register != 0
                 <<<<<<<<< -                                 #isZero = false
-                >>>>>>>>> [ - <<<<<<<<<<<<<<<<<<
+                >>>>>>>>                                    #go to isRegisterNegative
+                [                                           #if isRegisterNegative
+                    [-]                                         #isRegisterNegative = 0
+                    < +                                         #isRegisterNegativeCopy = true
+                    >> [ + <<<<<<<<<<<<<<<<<<
+                        - >>>>>>>>>>>>>>>>>> ]                  #tmp = register
+                    <                                           #go to isRegisterNegative
+                ]
+                < [ - > + < ]                               #isRegisterNegative = isRegisterNegativeCopy
+                >> [ - <<<<<<<<<<<<<<<<<<
                     + >>>>>>>>>>>>>>>>>> ]                  #tmp = register
             ]
 
-            <<<<<<<<<<<<<<<<<< [ - >>>>>>>>>>>>>>>>>>
-                + <<<<<<<<<<<<<<<<<< ]                  #register = tmp
+            < [                                         #if isRegisterNegative
+                [-]                                         #isRegisterNegative = 0
+                < +                                         #isRegisterNegativeCopy = true
+                <<<<<<<<<<<<<<<< [ + >>>>>>>>>>>>>>>>>>
+                    - <<<<<<<<<<<<<<<<<< ]                  #register = tmp
+                >>>>>>>>>>>>>>>>>                           #go to isRegisterNegative
+            ]
+            < [ - > + < ]                               #isRegisterNegative = isRegisterNegativeCopy
+            <<<<<<<<<<<<<<<< [ - >>>>>>>>>>>>>>>>>>
+                    + <<<<<<<<<<<<<<<<<< ]                  #register = tmp
 
             >>>>>>>>>                                   #go to isZero
             [                                           #if isZero
