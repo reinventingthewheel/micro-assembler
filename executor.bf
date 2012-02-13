@@ -328,7 +328,7 @@
     ============ '=' instruction  ======================================
     +                                       #isDesiredInstruction = true
     >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] > -------
-    [                                           #if instruction != 'S'
+    [                                           #if instruction != '='
         +++++++
         < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<< -        #isDesiredChar = false
 
@@ -385,6 +385,62 @@
     ============================================================================
 
 
+    ============ (lt) instruction  ======================================
+    +                                       #isDesiredInstruction = true
+    >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] > ----------
+    [                                           #if instruction != (lt)
+        ++++++++++
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<< -        #isDesiredChar = false
+
+        >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        [
+            -
+            < <<<< [<<<<] <<<<<<<<<<<<<<<<<<< +
+            >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        ]                                #tmp = instruction
+    ]
+
+    ++++++++++
+    < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+    [
+        >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        ----------
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        [
+            - >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+            + < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        ]
+    ]#instruction = tmp
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+
+        >>>>>>>> [-]                            #shouldSkip = false
+
+        >>>>>>>>>>>                             #go to register
+        [                                       #while register
+            <<<<<<<<<<<<<<<<<                       #go to operandCopy
+            [                                       #if operandCopy
+                -                                       #decrement operandCopy
+                [ - >>>>> + <<<<< ]                     #operandCopy2 = operandCopy
+            ]
+            >>>>> [ - <<<<< + >>>>> ]               #operandCopy = operandCopy2
+
+            < +                                     #increment registerCopy
+            >>>>>>>>>>>>> -                         #decrement register
+        ]
+
+        <<<<<<<<<<<<< [ - >>>>>>>>>>>>> + <<<<<<<<<<<<< ] #register = registerCopy
+
+        <<<<                                    #go to operadCopy
+        [                                       #if operandCopy
+            >>>>>> +                                #shouldSkip = true
+            <<<<<< [-]                              #operandCopy = 0
+        ]
+
+        <<                                      #go to isDesiredInstruction
+    ]
+    ============================================================================
 
 
     ============ (gt) instruction  ======================================
