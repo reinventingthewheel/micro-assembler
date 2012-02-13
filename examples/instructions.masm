@@ -1,22 +1,22 @@
-G #10
-G $10
+G #65
+G $66
 
 ;Some Commented Line
 
-S #10   ;Some Another Comment
-S $10
+S #67   ;Some Another Comment 2
+S $68
 
-+ #10
-+ $10
++ #69
++ $70
 
-- #10
-- $10
+- #71
+- $72
 
-J #10
-J $10
+J #73
+J $74
 
-C #10
-C $10
+C #75
+C $76
 
 R
 W
