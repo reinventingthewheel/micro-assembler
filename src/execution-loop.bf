@@ -42,6 +42,7 @@
 #12 flagRegisterPositive
 #13 flagOperandNegative
 #14 flagOperandPositive
+#15 tmp2
 #18 registerIsNegative
 #19 register
 #20 instructionsStart
@@ -123,36 +124,71 @@
         ]                              #restores operand negative flag from tmp
         ===========================================
 
+        >>>>>>>>>>>> [                          #if flagOperandNegative
+            >> +                                    #tmp2 = true
 
-        >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
-        >>>> [>>>>] >>> [>>>] >>                #go to current memory value
-        [                                       #while current memory value
-            -                                       #decrement it
-            << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
-            <<<<<<<<<<<<<<<<<<<                     #go to tmp
-            + > +                                   #increment tmp and operandCopy
-            >>>>>>>>>>>>>>>>>> >>>> [>>>>]          #go to current instruction
+            >>>>> >>>> [>>>>]                       #go to current instruction
             >>>> [>>>>] >>> [>>>] >>                #go to current memory value
-        ]
+            [                                       #while current memory value
+                +                                       #decrement it
+                << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+                <<<<<<<<<<<<<<<<<<<                     #go to tmp
+                - > -                                   #increment tmp and operandCopy
+                >>>>>>>>>>>>>>>>>> >>>> [>>>>]          #go to current instruction
+                >>>> [>>>>] >>> [>>>] >>                #go to current memory value
+            ]
 
-        << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
-        <<<<<<<<<<<<<<<<<<<                     #go to tmp
-        [                                       #while tmp
-            -                                       #decrement it
-            >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
-            >>>> [>>>>] >>> [>>>] >> +              #increment current memory value
             << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
             <<<<<<<<<<<<<<<<<<<                     #go to tmp
-        ]
+            [                                       #while tmp
+                +                                       #decrement it
+                >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+                >>>> [>>>>] >>> [>>>] >> -              #increment current memory value
+                << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+                <<<<<<<<<<<<<<<<<<<                     #go to tmp
+            ]
 
-        >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+            >>>>>>>>>>>> [-]                        #flagOperandNegative = false
+        ]
+        >> [ - << + >> ]                            #flagOperandNegative = tmp2
+
+        < [                                     #if flagOperandPositive
+            > +                                     #tmp2 = true
+
+            >>>>> >>>> [>>>>]                       #go to current instruction
+            >>>> [>>>>] >>> [>>>] >>                #go to current memory value
+            [                                       #while current memory value
+                -                                       #decrement it
+                << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+                <<<<<<<<<<<<<<<<<<<                     #go to tmp
+                + > +                                   #increment tmp and operandCopy
+                >>>>>>>>>>>>>>>>>> >>>> [>>>>]          #go to current instruction
+                >>>> [>>>>] >>> [>>>] >>                #go to current memory value
+            ]
+
+            << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+            <<<<<<<<<<<<<<<<<<<                     #go to tmp
+            [                                       #while tmp
+                -                                       #decrement it
+                >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+                >>>> [>>>>] >>> [>>>] >> +              #increment current memory value
+                << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+                <<<<<<<<<<<<<<<<<<<                     #go to tmp
+            ]
+
+            >>>>>>>>>>>>> [-]                       #flagOperandPositive = false
+        ]
+        > [ - < + > ]                               #flagOperandPositive = tmp2
+
+
+        >>>>> >>>> [>>>>]                       #go to current instruction
         >>>> [>>>>] >>> [>>>] +                 #sets current memory to false
         =====================================
         <<< [<<<] <<<< [<<<<] <<<< [<<<<]       #go to instructions
         <<<<<<<<<<<<<<<<<                       #go to isIndirectOperand
     ]
 
-    === Getting regiter negative flag ====
+    === Getting register negative flag ====
     #11 flagRegisterNegative
     #12 flagRegisterPositive
 
