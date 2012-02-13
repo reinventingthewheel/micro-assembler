@@ -371,11 +371,20 @@
             <<<<<<< [-]                             #flagRegisterPositive = false
         ]
 
-        <<<<<<<<<<                                  #go to operandCopy
-        [ - >>>>>>>>>>>>>>>>> + <<<<<<<<<<<<<<<<< ] #register = operandCopy
+        > [                                     #if flagOperandNegative
+            >>>>> +                                     #registerIsNegative = true
+            <<<<<<<<<<<<<<<<                            #go to operandCopy
+            [ + >>>>>>>>>>>>>>>>> - <<<<<<<<<<<<<<<<< ] #register = operandCopy
+            >>>>>>>>>>> [-]                             #flagOperandNegative = false
+        ]
 
+        > [                                     #if flagOperandPositive
+            <<<<<<<<<<<<                                #go to operandCopy
+            [ - >>>>>>>>>>>>>>>>> + <<<<<<<<<<<<<<<<< ] #register = operandCopy
+            >>>>>>>>>>>> [-]                            #flagOperandPositive = false
+        ]
 
-        <<                                      #go to isDesiredInstruction
+        <<<<<<<<<<<<<<                          #go to isDesiredInstruction
     ]
     ============================================================================
 
