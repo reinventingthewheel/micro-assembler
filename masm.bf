@@ -1,20 +1,20 @@
 ========= Instructions ==========
 (None)      : 1
-G #N        : 2
-G $N        : 3
-S #N        : 4
-S $N        : 5
-(plus) #N   : 6
-(plus) $N   : 7
-(minus) #N  : 8
-(minus) $N  : 9
-J #N        : 10
-J $N        : 11
-C #N        : 12
-C $N        : 13
-R           : 14
-W           : 15
+G           : 2
+S           : 3
+(plus)      : 4
+(minus)     : 5
+J           : 6
+C           : 7
+R           : 8
+W           : 9
 =================================
+
+========= Operand Types =========
+Direct      : 0
+Indirect    : 1
+=================================
+
 
 ============ Symbols ============
 #0  char
@@ -24,6 +24,7 @@ W           : 15
 #4  readChar
 #5  continueParsingLine
 #6  continueParsingLineCopy
+#7  operandType
 =================================
 
 
@@ -84,7 +85,7 @@ W           : 15
             ]
             >>>[-<<<+>>>]                               #char = tmp
             <[                                          #if isDesiredChar:
-                <++++                                       #instruction = 4
+                <+++                                        #instruction = 3
                 >-                                          #isDesiredChar = false
             ]
             <<                                          #go to char
@@ -101,7 +102,7 @@ W           : 15
             ]
             >>>[-<<<+>>>]                               #char = tmp
             <[                                          #if isDesiredChar:
-                <++++++                                     #instruction = 6
+                <++++                                       #instruction = 4
                 >-                                          #isDesiredChar = false
             ]
             <<                                          #go to char
@@ -118,7 +119,7 @@ W           : 15
             ]
             >>>[-<<<+>>>]                               #char = tmp
             <[                                          #if isDesiredChar:
-                <++++++++                                   #instruction = 8
+                <+++++                                      #instruction = 5
                 >-                                          #isDesiredChar = false
             ]
             <<                                          #go to char
@@ -135,7 +136,7 @@ W           : 15
             ]
             >>>[-<<<+>>>]                               #char = tmp
             <[                                          #if isDesiredChar:
-                <++++++++++                                 #instruction = 10
+                <++++++                                     #instruction = 6
                 >-                                          #isDesiredChar = false
             ]
             <<                                          #go to char
@@ -152,7 +153,7 @@ W           : 15
             ]
             >>>[-<<<+>>>]                               #char = tmp
             <[                                          #if isDesiredChar:
-                <++++++++++++                               #instruction = 12
+                <+++++++                                    #instruction = 7
                 >-                                          #isDesiredChar = false
             ]
             <<                                          #go to char
@@ -169,7 +170,7 @@ W           : 15
             ]
             >>>[-<<<+>>>]                               #char = tmp
             <[                                          #if isDesiredChar:
-                <++++++++++++++                             #instruction = 14
+                <++++++++                                   #instruction = 8
                 >-                                          #isDesiredChar = false
             ]
             <<                                          #go to char
@@ -186,7 +187,7 @@ W           : 15
             ]
             >>>[-<<<+>>>]                               #char = tmp
             <[                                          #if isDesiredChar:
-                <+++++++++++++++                            #instruction = 15
+                <+++++++++                                  #instruction = 9
                 >-                                          #isDesiredChar = false
             ]
             <<                                          #go to char
@@ -204,8 +205,8 @@ W           : 15
             ]
             >>>[-<<<+>>>]                               #char = tmp
             <[                                          #if isDesiredChar:
-                <+                                          #increment instruction
-                >-                                          #isDesiredChar = false
+                >>>>>+                                      #operandType = 1
+                <<<<<-                                      #isDesiredChar = false
             ]
             <<                                          #go to char
             ============================================================================
@@ -231,8 +232,14 @@ W           : 15
             <<<                                         #go to isDesiredChar
 
             ============ Debug only ====================================================
-            <++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ .         #print instruction
+            <++++++++++++++++++++++++++++++++++++++++++++++++ .         #print instruction
             [-]                                         #instruction = 0
+
+            >>>>>>++++++++++++++++++++++++++++++++++++++++++++++++.     #print operandType
+            [-]                                         #operandType = 0
+            <<<<<<                                      #go to instruction
+
+            ++++++++++++++++++++++++++++++++.[-]        #print '\s'
             ============================================================================
 
             >-                                          #isDesiredChar = false
@@ -247,8 +254,11 @@ W           : 15
 ]
 
 ============ Debug only ====================================================
-<<<[                                        #if instruction:
-    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ .          #print instruction
-    [-]                                         #instruction = 0
-]
+<<<                                         #go to instruction:
+++++++++++++++++++++++++++++++++++++++++++++++++ .          #print instruction
+[-]                                         #instruction = 0
+
+>>>>>>++++++++++++++++++++++++++++++++++++++++++++++++.     #print operandType
+[-]                                         #operandType = 0
+
 ============================================================================
