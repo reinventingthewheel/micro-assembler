@@ -641,7 +641,7 @@
                 <<<<<<<<<<<<< [ - >>>>>>>>>>>>>
                     + <<<<<<<<<<<<< ]                   #register = registerCopy
 
-                >>>>>>>>>>>> [-]                        #flagOperandPositive = false
+                >>>>>>>> [-]                        #flagOperandPositive = false
             ]
             << [-]                          #flagRegisterPositive = false
         ]
