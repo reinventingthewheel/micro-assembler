@@ -111,11 +111,11 @@
             >>>> [>>>>] >>> [>>>] > +               #go to current memory entry negative flag
             < <<< [<<<] <<<< [<<<<] <<<< [<<<<]     #go to instructions
             <<<<<<<<< -                             #operandIsNegativeCopy = false
-        ]                              #restores operang negative flag
+        ]                              #restores operand negative flag
         ===========================================
 
 
-        >>>>>>>>>>>>>>>>>> >>>> [>>>>]          #go to current instruction
+        >>>>>>>>> >>>> [>>>>]                   #go to current instruction
         >>>> [>>>>] >>> [>>>] >>                #go to current memory entry value
         [                                       #while current memory value
             -                                       #decrement it
@@ -375,7 +375,12 @@
         ]
         > [-]                                     #resets register
 
-        <<<<<<<<<<<<<<<<<                       #go to operandCopy
+        <<<<<<<<< [                             #if operandIsNegative
+            >>>>>>>> +                              #registerIsNegative = true
+            <<<<<<<< [-]                            #operandIsNegative = false
+        ]
+
+        <<<<<<<<                                #go to operandCopy
         [ - >>>>>>>>>>>>>>>>> + <<<<<<<<<<<<<<<<< ] #register = operandCopy
 
 
