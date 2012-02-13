@@ -75,14 +75,14 @@
         >>>>>>>>>>>>>>>>> >>>> [>>>>] >> +      #restores operandType
 
         ========== Retrieving indirect operand ===============
-        >> [>>>>] >>> -                         #marks first memory entry
+        >> [>>>>] >>> [-]                       #marks first memory entry
         <<< <<<< [<<<<]                         #go to current instruction
         <<<< [<<<<] <<<<<<<<<<<<<<<<<<          #go to operandCopy
         [                                       #while operandCopy
             -                                       #decrement operandCopy
             >>>>>>>>>>>>>>>>>> >>>> [>>>>]          #go to current instruction
             >>>> [>>>>] >>> [>>>] +                 #marks memory entry to false
-            >>>-                                    #marks next memory entry to true
+            >>>[-]                                  #marks next memory entry to true
             <<< [<<<] <<<< [<<<<] <<<< [<<<<]       #go to instructions
             <<<<<<<<<<<<<<<<<<                      #go to operandCopy
         ]
@@ -109,8 +109,8 @@
         ]
 
         >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
-        >>>> [>>>>] >>> [>>>] +                 #go to current memory to false
-
+        >>>> [>>>>] >>> [>>>] +                 #sets current memory to false
+        =====================================
         <<< [<<<] <<<< [<<<<] <<<< [<<<<]       #go to instructions
         <<<<<<<<<<<<<<<<<                       #go to isIndirectOperand
     ]
@@ -191,6 +191,90 @@
         <<<<<<<<<<<<<<<<<<<                     #go to isDesiredInstruction
     ]
     ============================================================================
+
+
+
+    ============ 'G' instruction  ======================================
+    +                                       #isDesiredInstruction = true
+    >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] > --
+    [                                           #if instruction != 'G'
+        ++
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<< -        #isDesiredChar = false
+
+        >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        [
+            -
+            < <<<< [<<<<] <<<<<<<<<<<<<<<<<<< +
+            >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        ]                                #tmp = instruction
+    ]
+
+    ++
+    < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+    [
+        >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        --
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        [
+            - >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+            + < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        ]
+    ]#instruction = tmp
+
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+
+
+        >>>>>>>>>>>>>>>>>>>> >>>> [>>>>]        #go to current instruction
+
+        ========== Writing Value in Memory ===============
+        >>>> [>>>>] >>> [-]                     #marks first memory entry
+        <<< <<<< [<<<<]                         #go to current instruction
+        <<<< [<<<<] <<<<<<<<<<<<<<<<<<          #go to operandCopy
+        [                                       #while operandCopy
+            -                                       #decrement operandCopy
+            >>>>>>>>>>>>>>>>>> >>>> [>>>>]          #go to current instruction
+            >>>> [>>>>] >>> [>>>] +                 #marks memory entry to false
+            >>>[-]                                  #marks next memory entry to true
+            <<< [<<<] <<<< [<<<<] <<<< [<<<<]       #go to instructions
+            <<<<<<<<<<<<<<<<<<                      #go to operandCopy
+        ]
+
+        >>>>>>>>>>>>>>>>>> >>>> [>>>>]          #go to current instruction
+        >>>> [>>>>] >>> [>>>] >>[-]             #reset current memory entry value
+
+
+        << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+        <                                       #go to register
+        [                                       #while register
+            -                                       #decrement it
+            <<<<<<<<<<<<<<<<<< +                    #increment tmp
+
+            >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+            >>>> [>>>>] >>> [>>>] >>+               #increment current memory value
+
+            << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+            <                                       #go to register
+        ]
+
+        <<<<<<<<<<<<<<<<<<                      #go to tmp
+        [                                       #while tmp
+            -                                       #decrement it
+            >>>>>>>>>>>>>>>>>> +                    #increment register
+            <<<<<<<<<<<<<<<<<<                      #go to tmp
+        ]
+
+        >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+        >>>> [>>>>] >>> [>>>] +                 #sets current memory to false
+        =====================================
+
+        <<< [<<<] <<<< [<<<<] <<<< [<<<<]       #go to instructions
+        <<<<<<<<<<<<<<<<<<<<                    #go to isDesiredInstruction
+    ]
+    ============================================================================
+
+
 
 
     ============ 'S' instruction  ======================================
