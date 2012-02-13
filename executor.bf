@@ -352,21 +352,6 @@
         ]
     ]#instruction = tmp
 
-    ============ Symbols ============
-    #0  isDesiredInstruction
-    #1  tmp
-    #2  operandCopy
-    #3  isIndirectOperand
-    #4  skipExecution
-    #5  skipExecutionCopy
-    #6  registerCopy
-    #7  operandCopy2
-    #8  shouldSkip
-    #18 registerIsNegative
-    #19 register
-    #20 instructionsStart
-    =================================
-
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
 
@@ -399,6 +384,61 @@
     ]
     ============================================================================
 
+
+
+
+    ============ (gt) instruction  ======================================
+    +                                       #isDesiredInstruction = true
+    >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] > -----------
+    [                                           #if instruction != (gt)
+        +++++++++++
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<< -        #isDesiredChar = false
+
+        >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        [
+            -
+            < <<<< [<<<<] <<<<<<<<<<<<<<<<<<< +
+            >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        ]                                #tmp = instruction
+    ]
+
+    +++++++++++
+    < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+    [
+        >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        -----------
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        [
+            - >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+            + < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        ]
+    ]#instruction = tmp
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+
+        >>>>>>>> [-]                            #shouldSkip = false
+
+        >>>>>>>>>>>                             #go to register
+        [                                       #while register
+            <<<<<<<<<<< +                           #shouldSkip = true
+            <<<<<<                                  #go to operandCopy
+            [                                       #if operandCopy
+                >>>>>> [-]                              #shouldSkip = false
+                <<<<<< -                                #decrement operandCopy
+                [ - >>>>> + <<<<< ]                     #operandCopy2 = operandCopy
+            ]
+            >>>>> [ - <<<<< + >>>>> ]               #operandCopy = operandCopy2
+
+            < +                                     #increment registerCopy
+            >>>>>>>>>>>>> -                         #decrement register
+        ]
+
+        <<<<<<<<<<<<< [ - >>>>>>>>>>>>> + <<<<<<<<<<<<< ] #register = registerCopy
+
+        <<<<<<                                  #go to isDesiredInstruction
+    ]
+    ============================================================================
 
 
 
