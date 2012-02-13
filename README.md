@@ -19,21 +19,21 @@ Here are the 18 instructions. Actually there are 10, but 8 of them with two adre
 mode, immediate (no addressing symbol) and `$` (relative):
 
 
-* `G <N>`    --> **G**ets value from register to `<N>` memory address
+* `G <N>`     -> **G**ets value from register to `<N>` memory address
 * `G $<N>`    -> **G**ets value from register to memory address pointed by `<N>`
-* `S <N>`    --> **S**ets register value to `<N>`
+* `S <N>`     -> **S**ets register value to `<N>`
 * `S $<N>`    -> **S**ets register to value pointed by `<N>`
-* `+ <N>`    --> **Add**s `<N>` to register
+* `+ <N>`     -> **Add**s `<N>` to register
 * `+ $<N>`    -> **Add**s value pointed by `<N>` to register
-* `- <N>`    --> **Subtract**s `<N>` from register (storing result in register)
+* `- <N>`     -> **Subtract**s `<N>` from register (storing result in register)
 * `- $<N>`    -> **Subtract**s value pointed by `<N>` from register
-* `J <N>`    --> **J**umps to line number `<N>`
+* `J <N>`     -> **J**umps to line number `<N>`
 * `J $<N>`    -> **J**umps to line number pointed by `<N>`
-* `= <N>`    --> Skips next line if register is **equals to** `<N>`
+* `= <N>`     -> Skips next line if register is **equals to** `<N>`
 * `= $<N>`    -> Skips next line if register is **equals to** value pointed by `<N>`
-* `< <N>`    --> Skips next line if register is **less than** `<N>`
+* `< <N>`     -> Skips next line if register is **less than** `<N>`
 * `< $<N>`    -> Skips next line if register is **less than** value pointed by `<N>`
-* `> <N>`    --> Skips next line if register is **greater than** `<N>`
+* `> <N>`     -> Skips next line if register is **greater than** `<N>`
 * `> $<N>`    -> Skips next line if register is **greater than** value pointed by `<N>`
 * `R`         -> **R**eads a char from stdin to register
 * `W`         -> **W**rites a char from register to stdout
