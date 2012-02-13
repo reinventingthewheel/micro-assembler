@@ -1,0 +1,150 @@
+S 0
+- 65
+G 0
+
+; ============= *Equals* comparison cases =================
+    ;=== Negative reg, print 'AB' ===
+    S $0
+    = 65
+    S 65
+    W
+    S 66
+    W
+
+    ;print '\n'
+    S 10;
+    W
+
+    ;=== Negative op, print 'AB' ===
+    S 65
+    = $0
+    W
+    S 66
+    W
+
+    ;print '\n'
+    S 10;
+    W
+
+
+    ;=== Both negative, print only 'B' ===
+    S $0
+    = $0
+    W
+    S 66
+    W
+
+    ;print '\n'
+    S 10;
+    W
+    ;print '\n'
+    S 10;
+    W
+
+
+; ============= *Less than* comparison cases =================
+    ;=== Negative op, print 'AB' ===
+    S 65
+    < $0
+    W
+    S 66
+    W
+
+    ;print '\n'
+    S 10;
+    W
+
+    ;=== Negative reg, print 'B' ===
+    S $0
+    < 0
+    W
+    S 66
+    W
+
+    ;print '\n'
+    S 10;
+    W
+
+
+    ;=== Negative both, print 'AB' ===
+    S $0
+    + 1
+    < $0
+    S 65
+    W
+    S 66
+    W
+
+    ;print '\n'
+    S 10;
+    W
+
+
+    ;=== Negative both, print only 'B' ===
+    S $0
+    - 1
+    < $0
+    W
+    S 66
+    W
+
+    ;print '\n'
+    S 10;
+    W
+    ;print '\n'
+    S 10;
+    W
+
+
+; ============= *Greater than* comparison cases =================
+    ;=== Negative reg, print 'AB' ===
+    S $0
+    > 0
+    S 65
+    W
+    S 66
+    W
+
+    ;print '\n'
+    S 10;
+    W
+
+    ;=== Negative op, print 'B' ===
+    S 0
+    > $0
+    W
+    S 66
+    W
+
+    ;print '\n'
+    S 10;
+    W
+
+
+    ;=== negative both, print 'AB' ===
+    S $0
+    - 1
+    > $0
+    S 65
+    W
+    S 66
+    W
+
+    ;print '\n'
+    S 10;
+    W
+
+    ;=== negative both, print 'B' ===
+    S $0
+    + 1
+    > $0
+    W
+    S 66
+    W
+
+    ;print '\n'
+    S 10;
+    W
+    ;print '\n'
+    S 10;
+    W
