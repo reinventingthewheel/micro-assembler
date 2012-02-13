@@ -1,7 +1,9 @@
 G #10
 G $10
 
-S #10
+;Some Commented Line
+
+S #10   ;Some Another Comment
 S $10
 
 + #10
