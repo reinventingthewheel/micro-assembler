@@ -71,7 +71,7 @@ Indirect    : 1
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <++                                         #instruction = 2
+            <+                                          #instruction = 2
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -88,7 +88,7 @@ Indirect    : 1
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <+++                                        #instruction = 3
+            <++                                         #instruction = 3
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -105,7 +105,7 @@ Indirect    : 1
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <++++                                       #instruction = 4
+            <+++                                        #instruction = 4
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -122,7 +122,7 @@ Indirect    : 1
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <+++++                                      #instruction = 5
+            <++++                                       #instruction = 5
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -139,7 +139,7 @@ Indirect    : 1
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <++++++                                     #instruction = 6
+            <+++++                                      #instruction = 6
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -156,7 +156,7 @@ Indirect    : 1
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <+++++++                                    #instruction = 7
+            <++++++                                     #instruction = 7
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -173,7 +173,7 @@ Indirect    : 1
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <++++++++                                   #instruction = 8
+            <+++++++                                    #instruction = 8
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -190,7 +190,7 @@ Indirect    : 1
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <+++++++++                                  #instruction = 9
+            <++++++++                                   #instruction = 9
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -498,7 +498,8 @@ Indirect    : 1
 
 
         ============ Debug only ====================================================
-        <++++++++++++++++++++++++++++++++++++++++++++++++ .         #print instruction
+        <+                                          #instruction plus 1
+        ++++++++++++++++++++++++++++++++++++++++++++++++ .         #print instruction
         [-]                                         #instruction = 0
 
         >>>>>>++++++++++++++++++++++++++++++++++++++++++++++++.     #print operandType
