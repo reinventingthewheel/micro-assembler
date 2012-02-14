@@ -38,6 +38,5 @@ mode, immediate (no addressing symbol) and `$` (relative):
 * `R`         -> **R**eads a char from stdin to register
 * `W`         -> **W**rites a char from register to stdout
 
-
 Comments starts on the `;` character and ends at end of line. Whitespaces are free
 
