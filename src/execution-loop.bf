@@ -278,6 +278,21 @@
 
         >>>>>>>>>>>>>>>>>> [-] > ,                   #read value from stdIn to register
 
+        ========== Special case for EOF (minus one) ===========
+        +                       #increments register to check for EOF
+        < +                     #registerIsNegative = true
+        >[
+            < [-] >             #registerIsNegative = false
+            - <<<<<<<<<<<<<<<<<<
+            + >>>>>>>>>>>>>>>>>>
+        ]                       #tmp = register
+        <<<<<<<<<<<<<<<<<<[
+            - >>>>>>>>>>>>>>>>>>
+            + <<<<<<<<<<<<<<<<<<
+        ]                       #register = tmp
+        >>>>>>>>>>>>>>>>>> -    #restores register value
+        ========== /Special case for EOF (minus one) ==========
+
         <<<<<<<<<<<<<<<<<<<                     #go to isDesiredInstruction
     ]
     ============================================================================
