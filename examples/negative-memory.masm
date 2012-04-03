@@ -1,12 +1,12 @@
 ; === Negative value store
 S 0
 - 10
-G 0
-G 0
+D 0
+D 0
 
 ; =========  Negative Add tests =================
     ; === Negative register + positive
-    S $0
+    L 0
     + 75
     W
 
@@ -29,7 +29,7 @@ G 0
 
 ; =========  Negative Minus tests =================
     ; === Negative register - positive
-    S $0
+    L 0
     - 10
     + 85
     W

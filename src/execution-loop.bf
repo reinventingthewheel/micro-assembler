@@ -43,6 +43,8 @@
 #13 flagOperandNegative
 #14 flagOperandPositive
 #15 tmp2
+#16 flagLoadingNegative
+#17 flagLoadingPositive
 #18 registerIsNegative
 #19 register
 #20 instructionsStart
@@ -299,10 +301,10 @@
 
 
 
-    ============ 'G' instruction  ======================================
+    ============ 'D' instruction  ======================================
     +                                       #isDesiredInstruction = true
     >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] > --
-    [                                           #if instruction != 'G'
+    [                                           #if instruction != 'D'
         ++
         < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<< -        #isDesiredChar = false
 
@@ -411,6 +413,151 @@
     ============================================================================
 
 
+
+    ============ 'L' instruction  ======================================
+    +                                       #isDesiredInstruction = true
+    >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] > ------------
+    [                                           #if instruction != 'L'
+        ++++++++++++
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<< -        #isDesiredChar = false
+
+        >>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        [
+            -
+            < <<<< [<<<<] <<<<<<<<<<<<<<<<<<< +
+            >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        ]                                #tmp = instruction
+    ]
+
+    ++++++++++++
+    < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+    [
+        >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+        ------------
+        < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        [
+            - >>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
+            + < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<
+        ]
+    ]#instruction = tmp
+
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+
+
+        >>>>>>>>>>>>>>>>>>>> >>>> [>>>>]        #go to current instruction
+
+        ========== Reading Value from Memory ===============
+        >>>> [>>>>] >>> [-]                     #marks first memory entry
+        <<< <<<< [<<<<]                         #go to current instruction
+        <<<< [<<<<] <<<<<<<<<<<<<<<<<<          #go to operandCopy
+        [                                       #while operandCopy
+            -                                       #decrement operandCopy
+            >>>>>>>>>>>>>>>>>> >>>> [>>>>]          #go to current instruction
+            >>>> [>>>>] >>> [>>>] +                 #marks memory entry to false
+            >>>[-]                                  #marks next memory entry to true
+            <<< [<<<] <<<< [<<<<] <<<< [<<<<]       #go to instructions
+            <<<<<<<<<<<<<<<<<<                      #go to operandCopy
+        ]
+
+        >>>>>>>>>>>>>> [-]                      #flagLoadingNegative = false
+        > [-]+                                  #flagLoadingPositive = true
+
+        >>> >>>> [>>>>]                         #go to current instruction
+        >>>> [>>>>] >>> [>>>] >                 #go to current memory entry negative flag
+        [                                       #if current memory is negative
+            -                                       #decrements flag
+            < <<< [<<<] <<<< [<<<<] <<<< [<<<<]     #go to instructions
+            <<<<<< [-]                              #flagOperandPositive = false
+            < +                                     #flagOperandNegative = true
+            <<<<<<<<<<<< +                          #increments tmp
+
+            >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+            >>>> [>>>>] >>> [>>>] >                 #go to current memory entry negative flag
+        ]
+
+        < <<< [<<<] <<<< [<<<<] <<<< [<<<<]     #go to instructions
+        <<<<<<<<<<<<<<<<<<<                     #go to tmp
+        [                                       #while tmp
+            -                                       #decrement it
+            >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+            >>>> [>>>>] >>> [>>>] > +               #increment current memory negative flag
+
+            < <<< [<<<] <<<< [<<<<] <<<< [<<<<]     #go to instructions
+            <<<<<<<<<<<<<<<<<<<                     #go to tmp
+        ]
+
+        >>>>>>>>>>>>>>> [                       #if flagLoadingNegative
+            >>                                      #go to registerIsNegative
+            [- >[+]<]+ >[-]                         #reset register negative flag and value
+
+            > >>>> [>>>>]                           #go to current instruction
+            >>>> [>>>>] >>> [>>>] >>                #go to current memory entry
+
+            [                                       #while memory entry
+                +                                       #increment it
+                << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+                < -                                     #decrement register
+                <<<<<<<<<<<<<<<<<< -                    #decrement tmp
+
+                >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+                >>>> [>>>>] >>> [>>>] >>                #go to current memory value
+            ]
+
+            << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+            <<<<<<<<<<<<<<<<<<<                     #go to tmp
+            [                                       #while tmp
+                +                                       #increment it
+                >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+                >>>> [>>>>] >>> [>>>] >> -              #decrement current memory value
+
+                << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+                <<<<<<<<<<<<<<<<<<<                     #go to tmp
+            ]
+
+            >>>>>>>>>>>>>>> [-]                 #flagLoadingNegative = false
+        ]
+
+        > [                                     #if flagLoadingPositive
+            >                                       #go to registerIsNegative
+            [- >[+]<] >[-]                          #reset register negative flag and value
+
+            > >>>> [>>>>]                           #go to current instruction
+            >>>> [>>>>] >>> [>>>] >>                #go to current memory entry
+
+            [                                       #while memory entry
+                -                                       #decrement it
+                << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+                < +                                     #increment register
+                <<<<<<<<<<<<<<<<<< +                    #increment tmp
+
+                >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+                >>>> [>>>>] >>> [>>>] >>                #go to current memory value
+            ]
+
+            << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+            <<<<<<<<<<<<<<<<<<<                     #go to tmp
+            [                                       #while tmp
+                -                                       #decrement it
+                >>>>>>>>>>>>>>>>>>> >>>> [>>>>]         #go to current instruction
+                >>>> [>>>>] >>> [>>>] >> +              #increment current memory value
+
+                << <<< [<<<] <<<< [<<<<] <<<< [<<<<]    #go to instructions
+                <<<<<<<<<<<<<<<<<<<                     #go to tmp
+            ]
+
+            >>>>>>>>>>>>>>>> [-]                #flagLoadingPositive = false
+        ]
+
+        >>> >>>> [>>>>]                         #go to current instruction
+        >>>> [>>>>] >>> [>>>] +                 #sets current memory to false
+        =====================================
+
+        <<< [<<<] <<<< [<<<<] <<<< [<<<<]       #go to instructions
+        <<<<<<<<<<<<<<<<<<<<                    #go to isDesiredInstruction
+    ]
+    ============================================================================
 
 
     ============ 'S' instruction  ======================================

@@ -1,0 +1,47 @@
+S 20
+D 1
+
+; Positive value loading
+S 72   ;H
+D $1   ;Stores it on memory 20
+
+S 0    ;reseting to check against errors
+L $1   ;loading it again to register
+W      ;writing it
+
+S 21
+D 2
+
+
+; Negative value loading
+S 0
+- 100
+D $2   ;Stores negative value on memory 21
+
+S 0    ;reseting to check against errors
+L $2   ;loading it again to register
++ 201  ;-100+201 = 101 (e)
+W      ;writing it
+
+; Direct attributions
+S 108  ;l
+W
+S 108  ;l
+W
+S 111  ;o
+W
+S 32   ;\s
+W
+S 87   ;W
+W
+S 111  ;o
+W
+S 114  ;r
+W
+S 108  ;l
+W
+S 100  ;d
+W
+S 10   ;\n
+W
+W

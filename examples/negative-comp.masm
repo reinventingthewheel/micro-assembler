@@ -1,10 +1,10 @@
 S 0
 - 65
-G 0
+D 0
 
 ; ============= *Equals* comparison cases =================
     ;=== Negative reg, print 'AB' ===
-    S $0
+    L 0
     = 65
     S 65
     W
@@ -28,7 +28,7 @@ G 0
 
 
     ;=== Both negative, print only 'B' ===
-    S $0
+    L 0
     = $0
     W
     S 66
@@ -55,7 +55,7 @@ G 0
     W
 
     ;=== Negative reg, print 'B' ===
-    S $0
+    L 0
     < 0
     W
     S 66
@@ -67,7 +67,7 @@ G 0
 
 
     ;=== Negative both, print 'AB' ===
-    S $0
+    L 0
     + 1
     < $0
     S 65
@@ -81,7 +81,7 @@ G 0
 
 
     ;=== Negative both, print only 'B' ===
-    S $0
+    L 0
     - 1
     < $0
     W
@@ -98,7 +98,7 @@ G 0
 
 ; ============= *Greater than* comparison cases =================
     ;=== Negative reg, print 'AB' ===
-    S $0
+    L 0
     > 0
     S 65
     W
@@ -122,7 +122,7 @@ G 0
 
 
     ;=== negative both, print 'AB' ===
-    S $0
+    L 0
     - 1
     > $0
     S 65
@@ -135,7 +135,7 @@ G 0
     W
 
     ;=== negative both, print 'B' ===
-    S $0
+    L 0
     + 1
     > $0
     W
