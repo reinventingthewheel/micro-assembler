@@ -260,6 +260,23 @@ Indirect    : 1
 
 
 
+        ============ Reading '#' ==================================================
+        >>+                                         #isDesiredChar = true
+        <<  -----------------------------------
+        [                                           #if char != '#'
+            +++++++++++++++++++++++++++++++++++
+            >>-                                         #isDesiredChar = false
+            <<[->>>+<<<]                                #tmp = char
+        ]
+        >>>[-<<<+>>>]                               #char = tmp
+        <[                                          #if isDesiredChar:
+            >>>>>+                                      #operandType = 1
+            <<<<<-                                      #isDesiredChar = false
+        ]
+        <<                                          #go to char
+        ============================================================================
+
+
         ============ Reading '$' ==================================================
         >>+                                         #isDesiredChar = true
         <<  ------------------------------------
@@ -270,7 +287,7 @@ Indirect    : 1
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            >>>>>+                                      #operandType = 1
+            >>>>>++                                     #operandType = 2
             <<<<<-                                      #isDesiredChar = false
         ]
         <<                                          #go to char
