@@ -1,4 +1,4 @@
- The Micro Assembly Specification #
+# The Micro Assembly Specification #
 
 This is a specification of a very limited assembly language (almost machine code)
 for the first level of abstraction from brainfuck.
@@ -10,9 +10,14 @@ Hence, every instruction should be written in the form:
 
     <I> <A><N>
 
-Where `<I>` is the instruction letter, `<A>` is the optional addressing mode symbol (
-`#` indicates that `<N>` is a memory address and `$` indicates that `<N>` is a pointer),
+Where `<I>` is the instruction letter, `<A>` is the optional addressing mode symbol
 and `<N>` is a non-negative integer.
+
+The addressing mode symbol can be:
+
+*`` (none)  -> Indicates an immediate value. The value will be exactly <N>
+*`@`        -> Indicates that value is at `<N>` memory address
+*`*`        -> Indicates a pointer. It will fetch operand value from the address stored at `<N>`
 
 ## Instruction Set ##
 
