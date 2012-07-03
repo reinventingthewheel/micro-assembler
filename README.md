@@ -15,7 +15,7 @@ and `<N>` is a non-negative integer.
 
 The addressing mode symbol can be:
 
-* `` (none)  -> Indicates an immediate value. The value will be exactly `<N>`
+* ` ` (none)  -> Indicates an immediate value. The value will be exactly `<N>`
 * `@`        -> Indicates that value is at `<N>` memory address
 * `*`        -> Indicates a pointer. It will fetch operand value from the address stored at `<N>`
 
