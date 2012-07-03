@@ -19,29 +19,29 @@ and `<N>` is a non-negative integer.
 Some instructions only accepts imediate values, while others can work with values
 stored on memory and pointers. Here are the instructions in all available forms:
 
-* `S <N>`     -> **S**ets register value to `<N>`
-* `L #<N>`    -> **L**oads to register the value in `<N>` memory address
-* `L $<N>`    -> **L**oads to register the value value pointed by `<N>`
-* `D #<N>`    -> **D**umps register value into `<N>` memory address
-* `D $<N>`    -> **D**umps register value into memory address pointed by `<N>`
+* `L <N>`     -> **L**ets into the value `<N>` into register
+* `L @<N>`    -> **L**oads to register the value in `<N>` memory address
+* `L *<N>`    -> **L**oads to register the value value pointed by `<N>`
+* `D @<N>`    -> **D**umps register value into `<N>` memory address
+* `D *<N>`    -> **D**umps register value into memory address pointed by `<N>`
 * `+ <N>`     -> **Add**s `<N>` to register
-* `+ #<N>`    -> **Add**s value in `<N>` memory address to register
-* `+ $<N>`    -> **Add**s value pointed by `<N>` to register
+* `+ @<N>`    -> **Add**s value in `<N>` memory address to register
+* `+ *<N>`    -> **Add**s value pointed by `<N>` to register
 * `- <N>`     -> **Subtract**s `<N>` from register (storing result in register)
-* `- #<N>`    -> **Subtract**s value in `<N>` memory address from register
-* `- $<N>`    -> **Subtract**s value pointed by `<N>` from register
+* `- @<N>`    -> **Subtract**s value in `<N>` memory address from register
+* `- *<N>`    -> **Subtract**s value pointed by `<N>` from register
 * `J <N>`     -> **J**umps to line number `<N>`
-* `J #<N>`    -> **J**umps to line number in `<N>` memory address
-* `J $<N>`    -> **J**umps to line number pointed by `<N>`
+* `J @<N>`    -> **J**umps to line number in `<N>` memory address
+* `J *<N>`    -> **J**umps to line number pointed by `<N>`
 * `= <N>`     -> Skips next line if register is **equals to** `<N>`
-* `= #<N>`    -> Skips next line if register is **equals to** value in `<N>` memory address
-* `= $<N>`    -> Skips next line if register is **equals to** value pointed by `<N>`
+* `= @<N>`    -> Skips next line if register is **equals to** value in `<N>` memory address
+* `= *<N>`    -> Skips next line if register is **equals to** value pointed by `<N>`
 * `< <N>`     -> Skips next line if register is **less than** `<N>`
-* `< #<N>`    -> Skips next line if register is **less than** value in `<N>` memory address
-* `< $<N>`    -> Skips next line if register is **less than** value pointed by `<N>`
+* `< @<N>`    -> Skips next line if register is **less than** value in `<N>` memory address
+* `< *<N>`    -> Skips next line if register is **less than** value pointed by `<N>`
 * `> <N>`     -> Skips next line if register is **greater than** `<N>`
-* `> #<N>`    -> Skips next line if register is **greater than** value in `<N>` memory address
-* `> $<N>`    -> Skips next line if register is **greater than** value pointed by `<N>`
+* `> @<N>`    -> Skips next line if register is **greater than** value in `<N>` memory address
+* `> *<N>`    -> Skips next line if register is **greater than** value pointed by `<N>`
 * `R`         -> **R**eads a char from stdin to register
 * `W`         -> **W**rites a char from register to stdout
 
