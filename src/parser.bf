@@ -75,23 +75,6 @@ Pointer   (*)   : 2
     [                                           #if continueParsingLine
         <<<<<                                       #go to char
 
-        ============ Reading 'L' instruction ======================================
-        >>+                                         #isDesiredChar = true
-        <<  ----------------------------------------------------------------------------
-        [                                           #if char != 'L'
-            ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-            >>-                                         #isDesiredChar = false
-            <<[->>>+<<<]                                #tmp = char
-        ]
-        >>>[-<<<+>>>]                               #char = tmp
-        <[                                          #if isDesiredChar:
-            <+                                          #instruction = 2
-            >-                                          #isDesiredChar = false
-        ]
-        <<                                          #go to char
-        ============================================================================
-
-
         ============ Reading 'D' instruction ======================================
         >>+                                         #isDesiredChar = true
         <<  --------------------------------------------------------------------
@@ -186,7 +169,7 @@ Pointer   (*)   : 2
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <+++++++++                                  #instruction = 10
+            <+++++++                                    #instruction = 8
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -202,7 +185,7 @@ Pointer   (*)   : 2
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <++++++++++                                 #instruction = 11
+            <++++++++                                   #instruction = 9
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -219,7 +202,7 @@ Pointer   (*)   : 2
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <+++++++                                    #instruction = 8
+            <+++++++++                                  #instruction = 10
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -236,7 +219,7 @@ Pointer   (*)   : 2
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <++++++++                                   #instruction = 9
+            <++++++++++                                 #instruction = 11
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
@@ -253,7 +236,7 @@ Pointer   (*)   : 2
         ]
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
-            <+++++++++++                                #instruction = 12
+            <+                                          #instruction = 2
             >-                                          #isDesiredChar = false
         ]
         <<                                          #go to char
