@@ -63,7 +63,32 @@
     ###############################################################
 
 
-    ########### Fetching operand ########################
+    ########### Fetching operandType flags ########################
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>  #go to current operandType
+    [                                             #if operandType
+        -                                              #decrement it
+
+        << <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<<<<< +  #isOperandMemory = true
+        < +                                            #increment tmp
+
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>  #go to current operandType
+        [                                             #if operandType
+            -                                              #decrement it
+            << <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<<<< +   #isOperandPointer = true
+            << +                                           #increment tmp
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>   #go to current operandType
+        ]
+    ]
+
+    << <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<<<<<<      #go to tmp
+    [
+        - >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>
+        + << <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    ]                                            #current operandType = tmp
+    ###############################################################
+
+
+    ########### Fetching operand ###################################
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>    #go to current operand
     [
         - <<< <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<< + <<<< +
@@ -77,7 +102,69 @@
     ]                                            #currentOperand = tmp
     ###############################################################
 
-    <                                            #go to isDesiredInstruction
+
+    ########### Fetching memory operand ############################
+    >                                       #go to isOperandMemory
+    [                                       #if isOperandMemory
+        -                                       #isOperandMemory = false
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]   #go to instructions 'end mark'
+        >>> [-]                                                #marks first memory address
+        <<<                                                    #go to memory start
+        <<<< [<<<<] <<<< [<<<<]                                #go to instructions start
+        <<<<<<<<<<<<<<<<<<<<<<<<<                              #go to operand
+
+        [                                       #while operand
+            -                                                   #decrement it
+            >>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]   #go to instructions 'end mark'
+            >>> [>>>]                                           #go to current memory
+            +                                                   #mark it as processed
+            >>> -                                               #mark next instruction as current
+            <<< [<<<]                                           #go to memory start
+            <<<< [<<<<] <<<< [<<<<]                             #go to instructions start
+            <<<<<<<<<<<<<<<<<<<<<<<<<                           #go to operand
+        ]
+
+
+        >>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]   #go to instructions 'end mark'
+        >>> [>>>] >>                                        #go to current memory
+        [                                                   #while current memory
+            -                                                     #decrement it
+            << <<< [<<<]                                          #go to memory start
+            <<<< [<<<<] <<<< [<<<<]                               #go to instructions start
+            <<<<<<<<<<<<<<<<<<<<<<<<< +                           #increment operand
+            <<<< +                                                #increment tmp
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>] #go to instructions 'end mark'
+            >>> [>>>] >>                                          #go to current memory
+        ]
+
+
+        << <<< [<<<]                            #go to memory start
+        <<<< [<<<<] <<<< [<<<<]                 #go to instructions start
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to tmp
+        [                                       #while tmp
+            -                                       #decrement it
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>>>           #go to instructions start
+            >>>> [>>>>] >>>> [>>>>]                 #go to instructions 'end mark'
+
+            >>> [>>>] >> +                          #increment current memory
+            << <<< [<<<]                            #go to memory start
+            <<<< [<<<<] <<<< [<<<<]                 #go to instructions start
+
+            <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to tmp
+        ]
+
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]  #go to memory start
+        >>> [>>>] +                                            #marks currentMemory as processed
+        <<< [<<<]                                              #go to memory start
+        <<<< [<<<<] <<<< [<<<<]                                #go to instructions start
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<< +                        #tmp = true
+        >                                                      #go to
+    ]
+    <[->+<]                                        #isOperandMemory = tmp
+    ###############################################################
+
+
+    <                                      #go to isDesiredInstruction
 
 
     ##################### 'D' instruction  #####################
@@ -95,21 +182,27 @@
 
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
-
-        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>           #go to register=0
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>           #go to register
         [ - <<<<<<<<<<<<<<<<<<<<<<<<<<<<
           + >>>>>>>>>>>>>>>>>>>>>>>>>>>> ]      #tmp = register
 
-        <<<<<<<<<<<<<<<<<<<<<<<<                #go to operand
+        > >>>> [>>>>] >>>> [>>>>]                              #go to instructions 'end mark'
+        >>> [-]                                                #marks first memory address
+        <<<                                                    #go to memory start
+        <<<< [<<<<] <<<< [<<<<]                                #go to instructions start
+        <<<<<<<<<<<<<<<<<<<<<<<<<                              #go to operand
+
+
         [                                       #while operand
             -                                                   #decrement it
-            >>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]    #go to instructions 'end mark'
+
+            >>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]   #go to instructions 'end mark'
             >>> [>>>]                                           #go to current memory
             +                                                   #mark it as processed
-            >>> -                                               #mark next instruction as current
+            >>> [-]                                             #mark next instruction as current
             <<< [<<<]                                           #go to memory start
             <<<< [<<<<] <<<< [<<<<]                             #go to instructions start
-            <<<<<<<<<<<<<<<<<<<<<<<<                            #go to operand
+            <<<<<<<<<<<<<<<<<<<<<<<<<                           #go to operand
         ]
 
 
