@@ -80,6 +80,63 @@
     <                                            #go to isDesiredInstruction
 
 
+    ##################### 'D' instruction  #####################
+    +                                       #isDesiredInstruction = true
+    >>>> ---
+    [                                       #if instructionNumber != 3
+        <<<< -                                  #isDesiredInstruction = false
+        >>>> [- <<< + >>> ]                     #tmp = instructionNumber
+    ]
+
+    +++
+    <<<
+    [- >>> + <<< ]                          #instructionNumber = tmp
+
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>           #go to register=0
+        [ - <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+          + >>>>>>>>>>>>>>>>>>>>>>>>>>>> ]      #tmp = register
+
+        <<<<<<<<<<<<<<<<<<<<<<<<                #go to operand
+        [                                       #while operand
+            -                                                   #decrement it
+            >>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]    #go to instructions 'end mark'
+            >>> [>>>]                                           #go to current memory
+            +                                                   #mark it as processed
+            >>> -                                               #mark next instruction as current
+            <<< [<<<]                                           #go to memory start
+            <<<< [<<<<] <<<< [<<<<]                             #go to instructions start
+            <<<<<<<<<<<<<<<<<<<<<<<<                            #go to operand
+        ]
+
+
+        <<<<                                    #go to tmp
+        [                                       #while tmp
+            -                                       #decrement it
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>>            #go to register
+            +                                       #increment it
+
+            > >>>> [>>>>] >>>> [>>>>]               #go to instructions 'end mark'
+
+            >>> [>>>] >> +                          #increment current memory
+            << <<< [<<<]                            #go to memory start
+            <<<< [<<<<] <<<< [<<<<]                 #go to instructions start
+
+            <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to tmp
+        ]
+
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]  #go to memory start
+        >>> [>>>] +                                            #marks currentMemory as processed
+        <<< [<<<]                                              #go to memory start
+        <<<< [<<<<] <<<< [<<<<]                                #go to instructions start
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<                         #go to isDesiredInstruction
+    ]
+    ###############################################################
+
+
     ##################### 'L' instruction  #####################
     +                                       #isDesiredInstruction = true
     >>>> --
