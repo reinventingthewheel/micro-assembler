@@ -129,6 +129,30 @@
 
 
 
+    ##################### 'R' instruction  #####################
+    +                                       #isDesiredInstruction = true
+    >>>> ----------
+    [                                       #if instructionNumber != 10
+        <<<< -                                  #isDesiredInstruction = false
+        >>>> [- <<< + >>> ]                     #tmp = instructionNumber
+    ]
+
+    ++++++++++
+    <<<
+    [- >>> + <<< ]                          #instructionNumber = tmp
+
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>,          #register=getch()
+
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to isDesiredInstruction
+    ]
+    ###############################################################
+
+
+
     ########### Marking Next Instruction for execution ############
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] +    #instruction controlSlot=1
     >>>> -                                          #next instruction=0
