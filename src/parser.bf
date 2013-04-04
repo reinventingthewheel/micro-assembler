@@ -86,7 +86,13 @@ Pointer   (*)   : 2
         >>>[-<<<+>>>]                               #char = tmp
         <[                                          #if isDesiredChar:
             <++                                         #instruction = 3
-            >-                                          #isDesiredChar = false
+
+            ##### 'D' instruction have special operand type handling ###############
+            >>>>>> -                                    #decrement instruction
+            ########################################################################
+
+            <<<<<                                       #go to isDesiredChar
+            -                                           #isDesiredChar = false
         ]
         <<                                          #go to char
         ============================================================================
