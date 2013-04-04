@@ -31,9 +31,9 @@ W
 
 R
 W
-;+ @1    ;Sums register with value in memory entry
-;- 48
-;D @1
++ @1    ;Sums register with value in memory entry
+- 48
+D @1
 
 L 10   ;\n
 W

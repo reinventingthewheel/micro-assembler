@@ -205,8 +205,13 @@
             <<<<<<<<<<<<<<<<<<<<<<<<<                           #go to operand
         ]
 
+        >>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]      #go to memory start
+        >>> [>>>] >> [-]                                       #currentMemory = 0
+        << <<< [<<<]                                           #go to memory start
+        <<<< [<<<<] <<<< [<<<<]                                #go to instructions start
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<                          #go to tmp
 
-        <<<<                                    #go to tmp
+
         [                                       #while tmp
             -                                       #decrement it
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>            #go to register
@@ -253,6 +258,50 @@
     ]
     ###############################################################
 
+
+
+    ##################### (plus) instruction  #####################
+    +                                       #isDesiredInstruction = true
+    >>>> ----
+    [                                       #if instructionNumber != 2
+        <<<< -                                  #isDesiredInstruction = false
+        >>>> [- <<< + >>> ]                     #tmp = instructionNumber
+    ]
+
+    ++++
+    <<<
+    [- >>> + <<< ]                          #instructionNumber = tmp
+
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+        >>>>>                                   #go to operand
+        [- >>>>>>>>>>>>>>>>>>>>>>>> + <<<<<<<<<<<<<<<<<<<<<<<< ] #register (plus)= operand
+        <<<<<                                   #go to isDesiredInstruction
+    ]
+    ###############################################################
+
+
+    ##################### (minus) instruction  #####################
+    +                                       #isDesiredInstruction = true
+    >>>> -----
+    [                                       #if instructionNumber != 2
+        <<<< -                                  #isDesiredInstruction = false
+        >>>> [- <<< + >>> ]                     #tmp = instructionNumber
+    ]
+
+    +++++
+    <<<
+    [- >>> + <<< ]                          #instructionNumber = tmp
+
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+        >>>>>                                   #go to operand
+        [- >>>>>>>>>>>>>>>>>>>>>>>> - <<<<<<<<<<<<<<<<<<<<<<<< ] #register (minus)= operand
+        <<<<<                                   #go to isDesiredInstruction
+    ]
+    ###############################################################
 
 
     ##################### 'W' instruction  #####################
