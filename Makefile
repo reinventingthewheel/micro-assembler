@@ -5,5 +5,5 @@ masm.bf: src/parser.bf src/execution-loop.bf tools/mkdumper.py
 	python tools/mkdumper.py < src/execution-loop.bf >> masm.bf
 
 %.bf: masm.bf %.masm
-	bf masm.bf < $*.masm > $*.bf
+	../brainfuck/bf masm.bf < $*.masm > $*.bf
 

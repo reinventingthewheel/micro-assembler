@@ -88,7 +88,7 @@ Pointer   (*)   : 2
             <++                                         #instruction = 3
 
             ##### 'D' instruction have special operand type handling ###############
-            >>>>>> -                                    #decrement instruction
+            >>>>>> -                                    #decrement operandType
             ########################################################################
 
             <<<<<                                       #go to isDesiredChar

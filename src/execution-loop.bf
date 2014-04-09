@@ -158,7 +158,7 @@
         <<< [<<<]                                              #go to memory start
         <<<< [<<<<] <<<< [<<<<]                                #go to instructions start
         <<<<<<<<<<<<<<<<<<<<<<<<<<<<< +                        #tmp = true
-        >                                                      #go to
+        >                                                      #go to isOperandMemory
     ]
     <[->+<]                                        #isOperandMemory = tmp
     ###############################################################
@@ -263,7 +263,7 @@
     ##################### (plus) instruction  #####################
     +                                       #isDesiredInstruction = true
     >>>> ----
-    [                                       #if instructionNumber != 2
+    [                                       #if instructionNumber != 4
         <<<< -                                  #isDesiredInstruction = false
         >>>> [- <<< + >>> ]                     #tmp = instructionNumber
     ]
@@ -285,7 +285,7 @@
     ##################### (minus) instruction  #####################
     +                                       #isDesiredInstruction = true
     >>>> -----
-    [                                       #if instructionNumber != 2
+    [                                       #if instructionNumber != 5
         <<<< -                                  #isDesiredInstruction = false
         >>>> [- <<< + >>> ]                     #tmp = instructionNumber
     ]
