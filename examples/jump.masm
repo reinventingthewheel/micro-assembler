@@ -1,26 +1,26 @@
 R
 W
-G 0    ;Stores read value into memory #0
+D @0    ;Stores read value into memory #0
 
-S #10
+L 10
 W       ;prints \n
 
-S $0    ;restores read value from memory 1 to register
+L @0    ;restores read value from memory 1 to register
 
-= #97
-J #17
+= 97
+J 17
 ;*********** IF register == 'a':
-S #61; '='
+L 61; '='
 W
-J #23
+J 23
 
 ;*********** ELSE:
-S #33; '!'
+L 33; '!'
 W
-S #61; '='
+L 61; '='
 W
 
 ;*********** END IF
-S #10
+L 10
 W
 W
