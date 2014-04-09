@@ -33,6 +33,7 @@
 #3  isOperandPointer
 #4  instructionNumber
 #5  operand
+#6  shouldMarkNextInstruction
 #28 registerIsNegative
 #29 register
 #30 instructionsStart
@@ -45,11 +46,12 @@
 >                                           #go to instruction
 [                                           #while instruction
     < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< #go to #0
-    [-]>[-]>[-]>[-]>[-]>[-]                      #resets #0 to #5
+    [-]>[-]>[-]>[-]>[-]>[-]>[-]                  #resets #0 to #6
+    +                                            #shouldMarkNextInstruction = true
 
 
     ########### Fetching instructionNumber ########################
-    >>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >      #go to currentInstruction
+    >>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >       #go to currentInstruction
     [
         - < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<<< + <<< +
         >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >
@@ -351,10 +353,52 @@
     ###############################################################
 
 
+    ##################### 'J' instruction  #####################
+    +                                       #isDesiredInstruction = true
+    >>>> ------
+    [                                       #if instructionNumber != 6
+        <<<< -                                  #isDesiredInstruction = false
+        >>>> [- <<< + >>> ]                     #tmp = instructionNumber
+    ]
+
+    ++++++++++
+    <<<
+    [- >>> + <<< ]                          #instructionNumber = tmp
+
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] +  #instruction controlSlot=1
+        [<<<<] >>>> -                                 #mark first instruction
+
+        <<<< <<<<<<<<<<<<<<<<<<<<<<<<<          #go to operand
+
+        # we decrement the operand once since the first operation
+        # is already marked
+        -                                       #decrement operand
+        [                                       #while operand
+            -                                       #decrement operand
+            >>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] + #disable current instruction
+            >>>> -                                  #mark next instruction
+            <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<<   #go to operand
+        ]
+
+        >[-]                                #shouldMarkNextInstruction = false
+        <<<<<<                              #go to isDesiredInstruction
+    ]
+    ###############################################################
+
 
     ########### Marking Next Instruction for execution ############
-    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] +    #instruction controlSlot=1
-    >>>> -                                          #next instruction=0
-    >                                               #go to instruction
+    >>>>>>                                  #go to shouldMarkNextInstruction
+    [                                           #if shouldMarkNextInstruction
+        -                                           #shouldMarkNextInstruction = false
+        >>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] +      #instruction controlSlot=1
+        >>>> -                                      #next instruction=0
+        <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<        #go to shouldMarkNextInstruction
+    ]
+
+    >>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >   #go to current instruction number
     ###############################################################
 ]
