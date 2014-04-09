@@ -33,7 +33,7 @@
 #3  isOperandPointer
 #4  instructionNumber
 #5  operand
-#6  shouldMarkNextInstruction
+#6  advanceInstructions
 #28 registerIsNegative
 #29 register
 #30 instructionsStart
@@ -47,7 +47,7 @@
 [                                           #while instruction
     < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< #go to #0
     [-]>[-]>[-]>[-]>[-]>[-]>[-]                  #resets #0 to #6
-    +                                            #shouldMarkNextInstruction = true
+    +                                            #advanceInstructions = 1
 
 
     ########### Fetching instructionNumber ########################
@@ -353,6 +353,51 @@
     ###############################################################
 
 
+
+    ##################### (equals) instruction  #####################
+    +                                       #isDesiredInstruction = true
+    >>>> -------
+    [                                       #if instructionNumber != 7
+        <<<< -                                  #isDesiredInstruction = false
+        >>>> [- <<< + >>> ]                     #tmp = instructionNumber
+    ]
+
+    +++++++
+    <<<
+    [- >>> + <<< ]                          #instructionNumber = tmp
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>           #go to register
+        [                                       #while register
+            -                                       #decrement register
+            <<<<<<<<<<<<<<<<<<<<<<<< -              #decrement operand
+            <<<< +                                  #increment tmp
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>>            #go to register
+        ]
+
+
+        #incrementing this will cause one instruction to be skipped
+        #we will revert this increment in case the values are different
+        <<<<<<<<<<<<<<<<<<<<<<< +          #increment advanceInstructions
+
+        <                                  #go to operand
+        [                                  #if operand
+            #if we enter this It means the values are different
+            > -                                 #decrement advanceInstructions
+            <<<<<                               #go to tmp
+            [
+                - >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                + <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            ]                                   #register = tmp
+            >>>>                                #go to operand
+            [-]                                 #operand = 0
+        ]
+        <<<<<                               #go to isDesiredInstruction
+    ]
+    ###############################################################
+
+
     ##################### 'J' instruction  #####################
     +                                       #isDesiredInstruction = true
     >>>> ------
@@ -361,7 +406,7 @@
         >>>> [- <<< + >>> ]                     #tmp = instructionNumber
     ]
 
-    ++++++++++
+    ++++++
     <<<
     [- >>> + <<< ]                          #instructionNumber = tmp
 
@@ -384,19 +429,19 @@
             <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<<   #go to operand
         ]
 
-        >[-]                                #shouldMarkNextInstruction = false
+        >[-]                                #advanceInstructions = 0
         <<<<<<                              #go to isDesiredInstruction
     ]
     ###############################################################
 
 
     ########### Marking Next Instruction for execution ############
-    >>>>>>                                  #go to shouldMarkNextInstruction
-    [                                           #if shouldMarkNextInstruction
-        -                                           #shouldMarkNextInstruction = false
+    >>>>>>                                  #go to advanceInstructions
+    [                                           #while advanceInstructions
+        -                                           #decrement advanceInstructions
         >>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] +      #instruction controlSlot=1
         >>>> -                                      #next instruction=0
-        <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<        #go to shouldMarkNextInstruction
+        <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<        #go to advanceInstructions
     ]
 
     >>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >   #go to current instruction number
