@@ -376,21 +376,22 @@
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>            #go to register
         ]
 
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<        #go to tmp
+        [
+            - >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            + <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        ]                                   #register = tmp
+
 
         #incrementing this will cause one instruction to be skipped
         #we will revert this increment in case the values are different
-        <<<<<<<<<<<<<<<<<<<<<<< +          #increment advanceInstructions
+        >>>>> +                            #increment advanceInstructions
 
         <                                  #go to operand
         [                                  #if operand
             #if we enter this It means the values are different
             > -                                 #decrement advanceInstructions
-            <<<<<                               #go to tmp
-            [
-                - >>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                + <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            ]                                   #register = tmp
-            >>>>                                #go to operand
+            <                                   #go to operand
             [-]                                 #operand = 0
         ]
         <<<<<                               #go to isDesiredInstruction
