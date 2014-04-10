@@ -1,115 +1,115 @@
 ; ============= *Equals* comparison cases =================
 ;=== Less, print 'AB' ===
-S 65
+L 65
 = 66
 W
 + 1
 W
 
 ;print '\n'
-S 10;
+L 10;
 W
 
 ;=== More, print 'AB' ===
-S 65
+L 65
 = 64
 W
 + 1
 W
 
 ;print '\n'
-S 10;
+L 10;
 W
 
 
 ;=== Equals, print only 'B' ===
-S 65
+L 65
 = 65
 W
 + 1
 W
 
 ;print '\n'
-S 10;
+L 10;
 W
 ;print '\n'
-S 10;
+L 10;
 W
 
 
 ; ============= *Less than* comparison cases =================
 ;=== Equals, print 'AB' ===
-S 65
+L 65
 < 65
 W
 + 1
 W
 
 ;print '\n'
-S 10;
+L 10;
 W
 
 ;=== More, print 'AB' ===
-S 65
+L 65
 < 64
 W
 + 1
 W
 
 ;print '\n'
-S 10;
+L 10;
 W
 
 
 ;=== Less than, print only 'B' ===
-S 65
+L 65
 < 66
 W
 + 1
 W
 
 ;print '\n'
-S 10;
+L 10;
 W
 ;print '\n'
-S 10;
+L 10;
 W
 
 
 ; ============= *Greater than* comparison cases =================
 ;=== Equals, print 'AB' ===
-S 65
+L 65
 > 65
 W
 + 1
 W
 
 ;print '\n'
-S 10;
+L 10;
 W
 
 ;=== Less, print 'AB' ===
-S 65
+L 65
 > 66
 W
 + 1
 W
 
 ;print '\n'
-S 10;
+L 10;
 W
 
 
 ;=== Greater than, print only 'B' ===
-S 65
+L 65
 > 64
 W
 + 1
 W
 
 ;print '\n'
-S 10;
+L 10;
 W
 ;print '\n'
-S 10;
+L 10;
 W
