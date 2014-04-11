@@ -1,0 +1,16 @@
+L 67   ;load 67
+D @66  ;stores 67 into memory position 66
+
+L 65   ;loads 65
+D *66  ;stores 65 into memory position 67
+
+L 0    ;reset register to make sure it worked
+
+L *66  ;loads value from memory pointed by memory 66
+W      ;Expected to print 'a'
+
+L 66   ;load literal 66
+W      ;Expected to print 'b'
+
+L @66  ;load value from memory 66
+W      ;Expected to print 'c'
