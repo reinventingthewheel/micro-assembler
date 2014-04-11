@@ -7,10 +7,10 @@ D *66  ;stores 65 into memory position 67
 L 0    ;reset register to make sure it worked
 
 L *66  ;loads value from memory pointed by memory 66
-W      ;Expected to print 'a'
+W      ;Expected to print 'A'
 
 L 66   ;load literal 66
-W      ;Expected to print 'b'
+W      ;Expected to print 'B'
 
 L @66  ;load value from memory 66
-W      ;Expected to print 'c'
+W      ;Expected to print 'C'
