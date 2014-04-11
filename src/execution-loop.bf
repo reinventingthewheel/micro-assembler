@@ -455,6 +455,62 @@
     ###############################################################
 
 
+
+    ##################### (lt) instruction  #####################
+    +                                       #isDesiredInstruction = true
+    >>>> --------
+    [                                       #if instructionNumber != 8
+        <<<< -                                  #isDesiredInstruction = false
+        >>>> [- <<< + >>> ]                     #tmp = instructionNumber
+    ]
+
+    ++++++++
+    <<<
+    [- >>> + <<< ]                          #instructionNumber = tmp
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+        >>>>>                                   #go to operand
+        [                                       #while operand
+            -                                       #decrement operand
+            >>> +                                   #reachZero = true
+            >>>>>>>>>>>>>>>>>>>>>                   #go to register
+            [                                       #if register
+                <<<<<<<<<<<<<<<<<<<<< -                 #reachZero = false
+                <<<<<<<               +                 #increment tmp
+                >>>>>>>>>>>>>>>>>>>>>>>>>>>> -          #decrement register
+                [ <<<<<<<<<<<<<<<<<<<<<< -
+                  >>>>>>>>>>>>>>>>>>>>>> +]             #tmp2 = register
+            ]
+
+            <<<<<<<<<<<<<<<<<<<<<<                  #go to tmp2
+            [ >>>>>>>>>>>>>>>>>>>>>> -
+              <<<<<<<<<<<<<<<<<<<<<< +]             #register = tmp2
+
+            >                                       #go to reachZero
+            [                                       #if reachZero
+                #if register reach zero it means that the register
+                #is less than operand
+                #so we should skip one instruction
+                << +                                    #increment advanceInstructions
+                < [-]                                   #operand = 0
+                >>> [-]                                 #reachZero = false
+            ]
+            <<<                                     #go to operand
+        ]
+
+        <<<<                                #go to tmp
+        [
+            - >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            + <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        ]                                   #register = tmp
+
+        <                                   #go to isDesiredInstruction
+    ]
+    ###############################################################
+
+
+
     ##################### 'J' instruction  #####################
     +                                       #isDesiredInstruction = true
     >>>> ------
