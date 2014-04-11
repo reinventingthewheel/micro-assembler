@@ -34,6 +34,8 @@
 #4  instructionNumber
 #5  operand
 #6  advanceInstructions
+#7  tmp2
+#8  reachZero
 #28 registerIsNegative
 #29 register
 #30 instructionsStart
@@ -46,8 +48,8 @@
 >                                           #go to instruction
 [                                           #while instruction
     < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< #go to #0
-    [-]>[-]>[-]>[-]>[-]>[-]>[-]                  #resets #0 to #6
-    +                                            #advanceInstructions = 1
+    [-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]       #resets #0 to #9
+    <<< +                                         #advanceInstructions = 1
 
 
     ########### Fetching instructionNumber ########################
@@ -395,6 +397,60 @@
             [-]                                 #operand = 0
         ]
         <<<<<                               #go to isDesiredInstruction
+    ]
+    ###############################################################
+
+
+    ##################### (gt) instruction  #####################
+    +                                       #isDesiredInstruction = true
+    >>>> ---------
+    [                                       #if instructionNumber != 9
+        <<<< -                                  #isDesiredInstruction = false
+        >>>> [- <<< + >>> ]                     #tmp = instructionNumber
+    ]
+
+    +++++++++
+    <<<
+    [- >>> + <<< ]                          #instructionNumber = tmp
+
+    <[                                      #if isDesiredInstruction
+        -                                       #isDesiredInstruction = false
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>           #go to register
+        [                                       #while register
+            -                                       #decrement register
+            <<<<<<<<<<<<<<<<<<<<< +                 #reachZero = true
+            <<<                                     #go to operand
+            [                                       #if operand
+                >>> -                                   #reachZero = false
+                <<< -                                   #decrement operand
+                [>> - << +]                             #tmp2 = operand
+            ]
+            >>[-<<+>>]                              #operand = tmp2
+            <<<<<< +                                #increment tmp
+
+            >>>>>>>                                 #go to reachZero
+            [                                       #if reachZero
+                #if operand reach zero it means that the register
+                #is greater than operand
+                #so we should skip one instruction
+                << +                                    #increment advanceInstructions
+                >>>>>>>>>>>>>>>>>>>>>>>                 #go to register
+                [ - <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                  + >>>>>>>>>>>>>>>>>>>>>>>>>>>> ]      #sum register into tmp
+
+                <<<<<<<<<<<<<<<<<<<<< [-]               #reachZero = false
+            ]
+
+            >>>>>>>>>>>>>>>>>>>>>            #go to register
+        ]
+
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<        #go to tmp
+        [
+            - >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            + <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        ]                                   #register = tmp
+
+        <                                   #go to isDesiredInstruction
     ]
     ###############################################################
 
