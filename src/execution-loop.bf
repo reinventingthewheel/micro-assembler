@@ -529,20 +529,19 @@
         [                                       #while operand
             -                                       #decrement operand
             >>> +                                   #reachZero = true
-            >>>>>>>>>>>>>>>>>>>>>                   #go to register
-            [                                       #if register
-                <<<<<<<<<<<<<<<<<<<<< -                 #reachZero = false
-                <<<<<<<               +                 #increment tmp
-                >>>>>>>>>>>>>>>>>>>>>>>>>>>> -          #decrement register
-                [ <<<<<<<<<<<<<<<<<<<<<< -
-                  >>>>>>>>>>>>>>>>>>>>>> +]             #tmp2 = register
+            >                                       #go to registerCopy
+            [                                       #if registerCopy
+                < -                                     #reachZero = false
+                > -                                     #decrement registerCopy
+                [ <<<<<<<< -
+                  >>>>>>>> + ]                          #tmp = registerCopy
             ]
 
-            <<<<<<<<<<<<<<<<<<<<<<                  #go to tmp2
-            [ >>>>>>>>>>>>>>>>>>>>>> -
-              <<<<<<<<<<<<<<<<<<<<<< +]             #register = tmp2
+            <<<<<<<<                                #go to tmp
+            [ >>>>>>>> -
+              <<<<<<<< +]                           #registerCopy = tmp
 
-            >                                       #go to reachZero
+            >>>>>>>                                 #go to reachZero
             [                                       #if reachZero
                 #if register reach zero it means that the register
                 #is less than operand
@@ -554,13 +553,7 @@
             <<<                                     #go to operand
         ]
 
-        <<<<                                #go to tmp
-        [
-            - >>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            + <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        ]                                   #register = tmp
-
-        <                                   #go to isDesiredInstruction
+        <<<<<                               #go to isDesiredInstruction
     ]
     ###############################################################
 
