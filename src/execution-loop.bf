@@ -34,7 +34,7 @@
 #4  instructionNumber
 #5  operand
 #6  advanceInstructions
-#7  tmp2
+#7  operandIsNegative
 #8  reachZero
 #9  registerCopy
 #28 registerIsNegative
@@ -143,7 +143,7 @@
             <<<<<<<<<<<<<<<<<<<<<<<<<                           #go to operand
         ]
 
-
+        ### fetching operand value ###
         >>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]   #go to instructions 'end mark'
         >>> [>>>] >>                                        #go to current memory
         [                                                   #while current memory
@@ -157,6 +157,7 @@
         ]
 
 
+        ### restoring operand value from tmp ###
         << <<< [<<<]                            #go to memory start
         <<<< [<<<<] <<<< [<<<<]                 #go to instructions start
         <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to tmp
@@ -167,6 +168,36 @@
 
             >>> [>>>] >> +                          #increment current memory
             << <<< [<<<]                            #go to memory start
+            <<<< [<<<<] <<<< [<<<<]                 #go to instructions start
+
+            <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to tmp
+        ]
+
+        ### fetching operandIsNegative value ###
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>] #go to instructions 'end mark'
+        >>> [>>>] >                                         #go to current memory negative flag
+        [                                                   #while current memory negative flag
+            -                                                     #decrement it
+            < <<< [<<<]                                           #go to memory start
+            <<<< [<<<<] <<<< [<<<<]                               #go to instructions start
+            <<<<<<<<<<<<<<<<<<<<<<< +                             #increment operandIsNegative
+            <<<<<< +                                              #increment tmp
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>] #go to instructions 'end mark'
+            >>> [>>>] >                                           #go to current memory negative flag
+        ]
+
+
+        ### restoring operand negative flag from tmp ###
+        < <<< [<<<]                             #go to memory start
+        <<<< [<<<<] <<<< [<<<<]                 #go to instructions start
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to tmp
+        [                                       #while tmp
+            -                                       #decrement it
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>>>           #go to instructions start
+            >>>> [>>>>] >>>> [>>>>]                 #go to instructions 'end mark'
+
+            >>> [>>>] > +                           #increment current memory negative flag
+            < <<< [<<<]                             #go to memory start
             <<<< [<<<<] <<<< [<<<<]                 #go to instructions start
 
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to tmp
@@ -203,6 +234,7 @@
         ]
 
 
+        ### fetching operand value ###
         >>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]   #go to instructions 'end mark'
         >>> [>>>] >>                                        #go to current memory
         [                                                   #while current memory
@@ -216,6 +248,7 @@
         ]
 
 
+        ### restoring operand value from tmp ###
         << <<< [<<<]                            #go to memory start
         <<<< [<<<<] <<<< [<<<<]                 #go to instructions start
         <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to tmp
@@ -226,6 +259,37 @@
 
             >>> [>>>] >> +                          #increment current memory
             << <<< [<<<]                            #go to memory start
+            <<<< [<<<<] <<<< [<<<<]                 #go to instructions start
+
+            <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to tmp
+        ]
+
+        ### fetching operandIsNegative value ###
+        >>>>>> [-]                              #operandIsNegative = false
+        >>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>]     #go to instructions 'end mark'
+        >>> [>>>] >                                         #go to current memory negative flag
+        [                                                   #while current memory negative flag
+            -                                                     #decrement it
+            < <<< [<<<]                                           #go to memory start
+            <<<< [<<<<] <<<< [<<<<]                               #go to instructions start
+            <<<<<<<<<<<<<<<<<<<<<<< +                             #increment operandIsNegative
+            <<<<<< +                                              #increment tmp
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>> [>>>>] >>>> [>>>>] #go to instructions 'end mark'
+            >>> [>>>] >                                           #go to current memory negative flag
+        ]
+
+
+        ### restoring operand negative flag from tmp ###
+        < <<< [<<<]                             #go to memory start
+        <<<< [<<<<] <<<< [<<<<]                 #go to instructions start
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to tmp
+        [                                       #while tmp
+            -                                       #decrement it
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>>>           #go to instructions start
+            >>>> [>>>>] >>>> [>>>>]                 #go to instructions 'end mark'
+
+            >>> [>>>] > +                           #increment current memory negative flag
+            < <<< [<<<]                             #go to memory start
             <<<< [<<<<] <<<< [<<<<]                 #go to instructions start
 
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<           #go to tmp
