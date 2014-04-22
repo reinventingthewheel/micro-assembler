@@ -36,6 +36,7 @@
 #6  advanceInstructions
 #7  tmp2
 #8  reachZero
+#9  registerCopy
 #28 registerIsNegative
 #29 register
 #30 instructionsStart
@@ -49,7 +50,21 @@
 [                                           #while instruction
     < <<<< [<<<<] <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< #go to #0
     [-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]       #resets #0 to #9
-    <<< +                                         #advanceInstructions = 1
+
+    >>>>>>>>>>>>>>>>>>>> [                      #while register
+        -                                           #decrement it
+        <<<<<<<<<<<<<<<<<<<< +                      #increment registerCopy
+        <<<<<<<< +                                  #increment tmp
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>                #go to register
+    ]
+
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<< [
+        - >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        + <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    ]                                           #register = tmp
+
+    >>>>> +                                     #advanceInstructions = 1
+
 
 
     ########### Fetching instructionNumber ########################
@@ -427,24 +442,16 @@
 
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
-        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>           #go to register
-        [                                       #while register
-            -                                       #decrement register
-            <<<<<<<<<<<<<<<<<<<<<<<< -              #decrement operand
-            <<<< +                                  #increment tmp
-            >>>>>>>>>>>>>>>>>>>>>>>>>>>>            #go to register
+        >>>>>>>>>                               #go to registerCopy
+        [                                       #while registerCopy
+            -                                       #decrement registerCopy
+            <<<< -                                  #decrement operand
+            >>>>                                    #go to registerCopy
         ]
-
-        <<<<<<<<<<<<<<<<<<<<<<<<<<<<        #go to tmp
-        [
-            - >>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            + <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        ]                                   #register = tmp
-
 
         #incrementing this will cause one instruction to be skipped
         #we will revert this increment in case the values are different
-        >>>>> +                            #increment advanceInstructions
+        <<< +                             #increment advanceInstructions
 
         <                                  #go to operand
         [                                  #if operand
