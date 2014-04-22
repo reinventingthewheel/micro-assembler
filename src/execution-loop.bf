@@ -479,18 +479,17 @@
 
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
-        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>           #go to register
-        [                                       #while register
-            -                                       #decrement register
-            <<<<<<<<<<<<<<<<<<<<< +                 #reachZero = true
+        >>>>>>>>>                               #go to registerCopy
+        [                                       #while registerCopy
+            -                                       #decrement registerCopy
+            < +                                     #reachZero = true
             <<<                                     #go to operand
             [                                       #if operand
                 >>> -                                   #reachZero = false
                 <<< -                                   #decrement operand
-                [>> - << +]                             #tmp2 = operand
+                [ <<<< - >>>> + ]                           #tmp = operand
             ]
-            >>[-<<+>>]                              #operand = tmp2
-            <<<<<< +                                #increment tmp
+            <<<< [ - >>>> + <<<< ]                  #operand = tmp
 
             >>>>>>>                                 #go to reachZero
             [                                       #if reachZero
@@ -498,23 +497,15 @@
                 #is greater than operand
                 #so we should skip one instruction
                 << +                                    #increment advanceInstructions
-                >>>>>>>>>>>>>>>>>>>>>>>                 #go to register
-                [ - <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                  + >>>>>>>>>>>>>>>>>>>>>>>>>>>> ]      #sum register into tmp
-
-                <<<<<<<<<<<<<<<<<<<<< [-]               #reachZero = false
+                >>>                                     #go to registerCopy
+                [-]                                     #registerCopy = 0
+                < [-]                                   #reachZero = false
             ]
 
-            >>>>>>>>>>>>>>>>>>>>>            #go to register
+            >                                       #go to registerCopy
         ]
 
-        <<<<<<<<<<<<<<<<<<<<<<<<<<<<        #go to tmp
-        [
-            - >>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            + <<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        ]                                   #register = tmp
-
-        <                                   #go to isDesiredInstruction
+        <<<<<<<<<                               #go to isDesiredInstruction
     ]
     ###############################################################
 
