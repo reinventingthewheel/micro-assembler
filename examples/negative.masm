@@ -1,74 +1,74 @@
-S 0
+L 0
 - 5
 - 5
 + 75
 W
 
-S 10
+L 10
 W
 W
 
 ========= Equals Test with negative register ==========
-S 0
+L 0
 - 10
 = 10
 J 21
 ;*********** IF register == 10:
-S 61; '='
+L 61; '='
 W
 J 27
 
 ;*********** ELSE:
-S 33; '!'
+L 33; '!'
 W
-S 61; '='
+L 61; '='
 W
 
 ;*********** END IF
-S 10
+L 10
 W
 W
 
 
 ========= Greater than Test with negative register ==========
-S 0
+L 0
 - 10
 > 10
 J 43
 ;*********** IF register == 10:
-S 62; '>'
+L 62; '>'
 W
 J 49
 
 ;*********** ELSE:
-S 33; '!'
+L 33; '!'
 W
-S 62; '>'
+L 62; '>'
 W
 
 ;*********** END IF
-S 10
+L 10
 W
 W
 
 
 ========= Less than Test with negative register ==========
-S 0
+L 0
 - 10
 < 0
 J 65
 ;*********** IF register == 10:
-S 60; '<'
+L 60; '<'
 W
 J 71
 
 ;*********** ELSE:
-S 33; '!'
+L 33; '!'
 W
-S 60; '<'
+L 60; '<'
 W
 
 ;*********** END IF
-S 10
+L 10
 W
 W

@@ -352,7 +352,34 @@
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
         >>>>>                                   #go to operand
-        [- >>>>>>>>>>>>>>>>>>>>>>>> + <<<<<<<<<<<<<<<<<<<<<<<< ] #register (plus)= operand
+        [                                       #while operand
+            -                                       #decrement it
+            >>> +                                   #reachZero = true
+            >>>>>>>>>>>>>>>>>>>>>                   #go to register
+            [                                       #if register
+                <<<<<<<<<<<<<<<<<<<<< [-]               #reachZero = false
+                >>>>>>>>>>>>>>>>>>>>> [
+                    - <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                    + >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                ]                                       #tmp = register
+            ]
+
+            <<<<<<<<<<<<<<<<<<<<<<<<<<<< [
+                - >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                + <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            ]                                       #register = tmp
+
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>> +          #increment register
+
+            <<<<<<<<<<<<<<<<<<<<<                   #go to reachZero
+            [                                       #if reachZero
+                >>>>>>>>>>>>>>>>>>>> [-]                #registerIsNegative = false
+                <<<<<<<<<<<<<<<<<<<< [-]                #reachZero = false
+            ]
+
+            <<<                                     #go to operand
+        ]
+
         <<<<<                                   #go to isDesiredInstruction
     ]
     ###############################################################
@@ -374,7 +401,34 @@
     <[                                      #if isDesiredInstruction
         -                                       #isDesiredInstruction = false
         >>>>>                                   #go to operand
-        [- >>>>>>>>>>>>>>>>>>>>>>>> - <<<<<<<<<<<<<<<<<<<<<<<< ] #register (minus)= operand
+        [                                       #while operand
+            -                                       #decrement it
+            >>> +                                   #reachZero = true
+            >>>>>>>>>>>>>>>>>>>>>                   #go to register
+            [                                       #if register
+                <<<<<<<<<<<<<<<<<<<<< [-]               #reachZero = false
+                >>>>>>>>>>>>>>>>>>>>> [
+                    - <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                    + >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                ]                                       #tmp = register
+            ]
+
+            <<<<<<<<<<<<<<<<<<<<<<<<<<<< [
+                - >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                + <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            ]                                       #register = tmp
+
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>> -          #decrement register
+
+            <<<<<<<<<<<<<<<<<<<<<                   #go to reachZero
+            [                                       #if reachZero
+                >>>>>>>>>>>>>>>>>>>> +                  #registerIsNegative = true
+                <<<<<<<<<<<<<<<<<<<< [-]                #reachZero = false
+            ]
+
+            <<<                                     #go to operand
+        ]
+
         <<<<<                                   #go to isDesiredInstruction
     ]
     ###############################################################
