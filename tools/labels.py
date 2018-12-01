@@ -1,5 +1,6 @@
 #! /usr/bin/python
 import re
+import sys
 
 if __name__ == "__main__":
     labels = {}
@@ -20,6 +21,6 @@ if __name__ == "__main__":
             if match:
                 label = match.group(1)
                 target_line = labels[label]
-                print "J %d; goto #%s" % (target_line, label)
+                sys.stdout.write("J %d; goto #%s\n" % (target_line, label))
             else:
-                print line
+                sys.stdout.write(line)
