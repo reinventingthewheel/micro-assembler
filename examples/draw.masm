@@ -1,0 +1,11 @@
+L 0
+- 1
+D @1
+
+;#loop
+R
+W
+= @1
+J 5; goto #loop
+
+;#end
