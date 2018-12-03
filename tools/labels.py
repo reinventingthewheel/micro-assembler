@@ -6,7 +6,7 @@ if __name__ == "__main__":
     labels = {}
 
     label_pattern = re.compile("^;#(\w+)$")
-    jump_pattern = re.compile("^J\s+\d*\s*;goto\s+#(\w+)$")
+    jump_pattern = re.compile("^J\s+\d*\s*;\s*goto\s+#(\w+)$")
 
     with open("/dev/stdin") as file:
         lines = file.readlines()
@@ -14,7 +14,7 @@ if __name__ == "__main__":
         for line_number, line in enumerate(lines):
             match = label_pattern.match(line.strip())
             if match:
-                labels[match.group(1)] = line_number
+                labels[match.group(1)] = line_number + 1
 
         for line in lines:
             match = jump_pattern.match(line.strip())
