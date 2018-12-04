@@ -1,11 +1,15 @@
 L 0
 - 1
-S @1
+S @0
 
 ;#loop
 R
+= @0
+J 11; goto #print
+J 15; goto #end
+
+;#print
 W
-= @1
 J 5; goto #loop
 
 ;#end

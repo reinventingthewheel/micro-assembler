@@ -8,19 +8,20 @@ W       ;prints \n
 L @0    ;restores read value from memory 1 to register
 
 = 97
-J 17
-;*********** IF register == 'a':
-L 61; '='
-W
-J 23
+J 18; goto #not_a
 
-;*********** ELSE:
+;#is_a
+L 61 ; '='
+W
+J 24; goto #end
+
+;#not_a
 L 33; '!'
 W
 L 61; '='
 W
 
-;*********** END IF
+;#end
 L 10
 W
 W
