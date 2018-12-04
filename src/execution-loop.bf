@@ -307,7 +307,7 @@
     <<<                                    #go to isDesiredInstruction
 
 
-    ##################### 'D' instruction  #####################
+    ##################### 'S' instruction  #####################
     +                                       #isDesiredInstruction = true
     >>>> ---
     [                                       #if instructionNumber != 3
